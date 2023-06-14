@@ -26,7 +26,7 @@ class Bookmark(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=1)
 
 class AuthToken(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='token')
     tokenId = models.CharField(max_length=20)
     expiresIn = models.DateField(default=datetime.now, blank=True)
 
