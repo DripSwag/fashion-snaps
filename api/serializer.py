@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import AuthToken, User
+from .models import AuthToken, Post, User
 
 class TokenSerializer(ModelSerializer):
     class Meta:
@@ -11,3 +11,8 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'token']
+
+class PostSerializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
