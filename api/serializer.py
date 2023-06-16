@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import AuthToken, Post, User
+from .models import AuthToken, Comment, Post, User
 
 class TokenSerializer(ModelSerializer):
     class Meta:
@@ -15,4 +15,9 @@ class UserSerializer(ModelSerializer):
 class PostSerializer(ModelSerializer):
     class Meta:
         model = Post
+        fields = '__all__'
+
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
         fields = '__all__'

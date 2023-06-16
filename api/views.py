@@ -2,25 +2,25 @@ from django.http.multipartparser import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
-from .models import AuthToken, Post, User
-from .serializer import PostSerializer, UserSerializer
+from .models import AuthToken, Comment, Post, User
+from .serializer import CommentSerializer, PostSerializer, UserSerializer
+from .views_utils import getResponse
+import random
 
 # Create your views here.
 
 @api_view(['GET'])
 def login(request, username, password):
     if request.method == 'GET':
-        try:
-            user = User.objects.get(username=username, password=password)
+        user = User.objects.filter(username=username, password=password)
+        if user.count() == 1:
             try:
-                token = AuthToken.objects.get(user=user)
+                token = AuthToken.objects.get(user=user[0])
                 token.update()
             except:
-                user.createToken()
-            serializer = UserSerializer(user, many=False)
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        except:
-            return Response({ 'Not allowed' }, status=status.HTTP_401_UNAUTHORIZED)
+                user[0].createToken()
+        return getResponse(serializer=UserSerializer, model=user, statusCode=status.HTTP_200_OK, single=True)
+
 
 @api_view(['POST'])
 def newPost(request):
@@ -34,9 +34,25 @@ def newPost(request):
 @api_view(['GET'])
 def getPost(request, id):
     if request.method == 'GET':
-        try:
-            post = Post.objects.get(id=id)
-            serializer = PostSerializer(post, many=False)
-        except:
-            return Response({ 'Not working' }, status=status.HTTP_400_BAD_REQUEST)
+        post = Post.objects.filter(id=id)
+        return getResponse(serializer=PostSerializer, model=post, statusCode=status.HTTP_200_OK, single=True)
 
+@api_view(['POST'])
+def createComment(request):
+    serializer = CommentSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)
+
+@api_view(['GET'])
+def getComments(request):
+    if request.method == 'GET':
+        if Comment.objects.count() > 2:
+            numberOfComments = 3
+        else:
+            numberOfComments = Comment.objects.count()
+        #Inefficient apparently
+        indexes = random.sample(range(Comment.objects.count()), numberOfComments)
+        serializer = CommentSerializer([Comment.objects.all()[x] for x in indexes], many=True)
+        return Response(serializer.data)
