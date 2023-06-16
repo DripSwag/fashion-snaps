@@ -6,7 +6,12 @@ class TokenSerializer(ModelSerializer):
         model = AuthToken
         fields = ['tokenId']
 
-class UserSerializer(ModelSerializer):
+class UsernameSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+class LoginSerializer(ModelSerializer):
     token = TokenSerializer(many=True, read_only=True)
     class Meta:
         model = User
@@ -20,4 +25,11 @@ class PostSerializer(ModelSerializer):
 class CommentSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = {}
+        representation['id'] = instance.id
+        representation['comment'] = instance.comment
+        representation['username'] = instance.user.username
+
+        return representation

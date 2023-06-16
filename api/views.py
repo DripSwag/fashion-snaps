@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
 from .models import AuthToken, Comment, Post, User
-from .serializer import CommentSerializer, PostSerializer, UserSerializer
+from .serializer import CommentSerializer, PostSerializer, LoginSerializer
 from .views_utils import getResponse
 import random
 
@@ -19,7 +19,7 @@ def login(request, username, password):
                 token.update()
             except:
                 user[0].createToken()
-        return getResponse(serializer=UserSerializer, model=user, statusCode=status.HTTP_200_OK, single=True)
+        return getResponse(serializer=LoginSerializer, model=user, statusCode=status.HTTP_200_OK, single=True)
 
 
 @api_view(['POST'])
