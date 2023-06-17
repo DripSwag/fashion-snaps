@@ -32,10 +32,11 @@ def newPost(request):
         return Response(serializer.errors)
 
 @api_view(['GET'])
-def getPost(request, id):
+def getPost(request):
     if request.method == 'GET':
-        post = Post.objects.filter(id=id)
-        return getResponse(serializer=PostSerializer, model=post, statusCode=status.HTTP_200_OK, single=True)
+        post = Post.objects.all()[random.randint(0, Post.objects.count() - 1)]
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
 
 @api_view(['POST'])
 def createComment(request):
@@ -46,13 +47,14 @@ def createComment(request):
     return Response(serializer.errors)
 
 @api_view(['GET'])
-def getComments(request):
+def getComments(request, postId):
     if request.method == 'GET':
-        if Comment.objects.count() > 2:
+        count = Comment.objects.filter(post=postId).count()
+        if count > 2:
             numberOfComments = 3
         else:
-            numberOfComments = Comment.objects.count()
+            numberOfComments = count
         #Inefficient apparently
-        indexes = random.sample(range(Comment.objects.count()), numberOfComments)
-        serializer = CommentSerializer([Comment.objects.all()[x] for x in indexes], many=True)
-        return Response(serializer.data)
+        indexes = random.sample(range(count), numberOfComments)
+        return getResponse(serializer=CommentSerializer, model=[Comment.objects.filter(post=postId)[x] for x in indexes], statusCode=status.HTTP_200_OK, single=False)
+

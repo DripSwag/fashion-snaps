@@ -30,6 +30,7 @@ class CommentSerializer(ModelSerializer):
         representation = {}
         representation['id'] = instance.id
         representation['comment'] = instance.comment
+        representation['user'] = instance.user.id
         representation['username'] = instance.user.username
 
         return representation
