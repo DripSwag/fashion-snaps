@@ -16,7 +16,7 @@ interface post{
 }
 
 async function clicked(username: string, password: string, router: AppRouterInstance, setIncorrect: Dispatch<SetStateAction<boolean>>){
-  const responseLogin = await fetch('http://127.0.0.1:8000/api/login/' + username + '/' + password)
+  const responseLogin = await fetch('http://127.0.0.1:8000/api/login/' + username + '/' + password + '/')
   if(responseLogin.status === 200){
     const bodyLogin: login = await responseLogin.json()
     const bodyPost: post = await fetch('http://127.0.0.1:8000/api/post/get').then((response) => response.json())
