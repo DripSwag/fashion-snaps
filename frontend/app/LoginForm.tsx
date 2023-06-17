@@ -11,8 +11,6 @@ interface login{
 
 interface post{
   id: number,
-  image: string,
-  user: number
 }
 
 async function clicked(username: string, password: string, router: AppRouterInstance, setIncorrect: Dispatch<SetStateAction<boolean>>){
@@ -20,7 +18,7 @@ async function clicked(username: string, password: string, router: AppRouterInst
   if(responseLogin.status === 200){
     const bodyLogin: login = await responseLogin.json()
     const bodyPost: post = await fetch('http://127.0.0.1:8000/api/post/get').then((response) => response.json())
-    router.push('/homepage/' + bodyLogin['id'] + '?postid=' + bodyPost['user'].toString())
+    router.push('/homepage/' + bodyLogin['id'] + '?postId=' + bodyPost['id'].toString())
   }
   else{
     setIncorrect(false)
