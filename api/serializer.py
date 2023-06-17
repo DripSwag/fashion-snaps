@@ -17,10 +17,16 @@ class LoginSerializer(ModelSerializer):
         model = User
         fields = ['id', 'token']
 
+class RandomPostSerializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id']
+
 class PostSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+
 
 class CommentSerializer(ModelSerializer):
     class Meta:

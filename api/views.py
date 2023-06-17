@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
 from .models import AuthToken, Comment, Post, User
-from .serializer import CommentSerializer, PostSerializer, LoginSerializer
+from .serializer import CommentSerializer, LoginSerializer, RandomPostSerializer, PostSerializer
 from .views_utils import getResponse
 import random
 
@@ -32,11 +32,17 @@ def newPost(request):
         return Response(serializer.errors)
 
 @api_view(['GET'])
-def getPost(request):
+def getRandomPost(request):
     if request.method == 'GET':
         post = Post.objects.all()[random.randint(0, Post.objects.count() - 1)]
-        serializer = PostSerializer(post)
+        serializer = RandomPostSerializer(post)
         return Response(serializer.data)
+
+@api_view(['GET'])
+def getPost(request, postId):
+    if request.method == 'GET':
+        post = Post.objects.filter(id=postId)
+        return getResponse(PostSerializer, post, status.HTTP_200_OK, single=True)
 
 @api_view(['POST'])
 def createComment(request):
