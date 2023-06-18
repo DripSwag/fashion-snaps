@@ -14,11 +14,18 @@ interface comment{
 
 export default function Comments({ commentId }: { commentId: string }){
   const [comments, setComments] = useState<Array<comment>>()
+  const [noComments, setNoComments] = useState(false)
 
   async function getComments(id: string){
     const response = await fetch('http://127.0.0.1:8000/api/comment/get/' + id)
-    const body = await response.json()
-    setComments(body)
+    if(response.status === 200){
+      const body = await response.json()
+      setNoComments(true)
+      setComments(body)
+    }
+    else if(response.status === 204){
+      setNoComments(true)
+    }
   }
 
   useEffect(() => {
@@ -32,6 +39,7 @@ export default function Comments({ commentId }: { commentId: string }){
           return <Comment username={data['username']} comment={data['comment']} key={data['id']} />
       })
       }
+      <p className={noComments ? 'block' : 'hidden'}>No Comments</p>
       <button onClick={() => { getComments(commentId) }}>Refresh Comments</button>
     </div>
   )
