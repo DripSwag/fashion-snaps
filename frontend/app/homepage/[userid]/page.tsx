@@ -1,5 +1,4 @@
-import Comments from "./Comments"
-import Review from "./Review"
+import Comment from "./Comment"
 
 interface post{
   id: number
@@ -21,9 +20,8 @@ export default async function Homepage({ params, searchParams }: { params: { use
     <div className="h-full">
       <div className='h-3/4 absolute w-max top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2'>
         <img src={'http://127.0.0.1:8000' + post['image']} className='h-full'></img>
-        <Review />
+        <Comment postId={searchParams['postId']} />
       </div>
-      <Comments commentId={searchParams['postId']} />
     </div>
   )
 }

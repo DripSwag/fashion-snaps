@@ -56,11 +56,10 @@ def createComment(request):
 def getComments(request, postId):
     if request.method == 'GET':
         count = Comment.objects.filter(post=postId).count()
-        if count > 2:
-            numberOfComments = 3
+        if count > 0:
+            # Why do I have to make an array for this function
+            return getResponse(serializer=CommentSerializer, model=[Comment.objects.all().filter(post=postId)[random.randint(0, count - 1)]], statusCode=status.HTTP_200_OK, single=True)
         else:
-            numberOfComments = count
-        #Inefficient apparently
-        indexes = random.sample(range(count), numberOfComments)
-        return getResponse(serializer=CommentSerializer, model=[Comment.objects.filter(post=postId)[x] for x in indexes], statusCode=status.HTTP_200_OK, single=False)
+            return getResponse(serializer=CommentSerializer, model=[], statusCode=status.HTTP_200_OK, single=True)
+
 
