@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
 from .models import AuthToken, Comment, Post, User
-from .serializer import CommentSerializer, LoginSerializer, RandomPostSerializer, PostSerializer
+from .serializer import CommentCreateSerializer, CommentSerializer, LoginSerializer, RandomPostSerializer, PostSerializer
 from .views_utils import getResponse
 import random
 
@@ -46,7 +46,8 @@ def getPost(request, postId):
 
 @api_view(['POST'])
 def createComment(request):
-    serializer = CommentSerializer(data=request.data)
+    serializer = CommentCreateSerializer(data=request.data)
+    print(serializer)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
