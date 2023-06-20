@@ -19,7 +19,7 @@ class Post(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=1)
-    comment = models.CharField(max_length=200)
+    comment = models.CharField(max_length=500)
 
 class Bookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
