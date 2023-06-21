@@ -40,8 +40,3 @@ class CommentSerializer(ModelSerializer):
         representation['username'] = instance.user.username
 
         return representation
-
-class CommentCreateSerializer(ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'

@@ -18,7 +18,7 @@ async function clicked(username: string, password: string, router: AppRouterInst
   if(responseLogin.status === 200){
     const bodyLogin: login = await responseLogin.json()
     const bodyPost: post = await fetch('http://127.0.0.1:8000/api/post/get').then((response) => response.json())
-    router.push('/homepage/' + bodyPost['id'].toString() + '?userId=' + bodyLogin['id'])
+    router.push('/homepage/' + bodyLogin['id'] + '?postId=' + bodyPost['id'].toString())
   }
   else{
     setIncorrect(false)
