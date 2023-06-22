@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.container{
+.container {
   height: 100%;
   width: 100%;
 }
 
-.textOverflow{
+.textOverflow {
   overflow-wrap: break-word;
 }
