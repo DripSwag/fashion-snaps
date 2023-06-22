@@ -44,6 +44,12 @@ def getPost(request, postId):
         post = Post.objects.filter(id=postId)
         return getResponse(PostSerializer, post, status.HTTP_200_OK, single=True)
 
+@api_view(['GET'])
+def getUserPosts(request, userId):
+    if request.method == 'GET':
+        posts = Post.objects.filter(user=userId)
+        return getResponse(PostSerializer, posts, status.HTTP_200_OK, single=False)
+
 @api_view(['POST'])
 def createComment(request):
     serializer = CommentSerializer(data=request.data)
@@ -61,5 +67,4 @@ def getComments(request, postId):
             return getResponse(serializer=CommentSerializer, model=[Comment.objects.all().filter(post=postId)[random.randint(0, count - 1)]], statusCode=status.HTTP_200_OK, single=True)
         else:
             return getResponse(serializer=CommentSerializer, model=[], statusCode=status.HTTP_200_OK, single=True)
-
 
