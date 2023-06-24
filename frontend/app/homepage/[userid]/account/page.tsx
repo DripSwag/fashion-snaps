@@ -25,13 +25,17 @@ export default async function Account({
   const posts: Array<post> = await getPosts(params["userid"]);
 
   return (
-    <main>
-      <h1>Account</h1>
-      <div>
-        {posts &&
-          posts.map((data: post) => {
-            return <Post img={data["image"]} id={data["id"]} />;
-          })}
+    <main className="flex justify-center">
+      <div className="max-w-[1200px] flex flex-col gap-4 my-12">
+        <h1 className="font-bold text-4xl">Posts</h1>
+        <div className="flex gap-8">
+          {posts &&
+            posts.map((data: post) => {
+              return (
+                <Post img={data["image"]} id={data["id"]} key={data["id"]} />
+              );
+            })}
+        </div>
       </div>
     </main>
   );
