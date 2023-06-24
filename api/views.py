@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
 from .models import AuthToken, Comment, Post, User
-from .serializer import CommentSerializer, LoginSerializer, RandomPostSerializer, PostSerializer
+from .serializer import GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer
 from .views_utils import getResponse
 import random
 
@@ -52,7 +52,7 @@ def getUserPosts(request, userId):
 
 @api_view(['POST'])
 def createComment(request):
-    serializer = CommentSerializer(data=request.data)
+    serializer = PostComentSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
@@ -64,7 +64,7 @@ def getComments(request, postId):
         count = Comment.objects.filter(post=postId).count()
         if count > 0:
             # Why do I have to make an array for this function
-            return getResponse(serializer=CommentSerializer, model=[Comment.objects.all().filter(post=postId)[random.randint(0, count - 1)]], statusCode=status.HTTP_200_OK, single=True)
+            return getResponse(serializer=GetCommentSerializer, model=[Comment.objects.all().filter(post=postId)[random.randint(0, count - 1)]], statusCode=status.HTTP_200_OK, single=True)
         else:
-            return getResponse(serializer=CommentSerializer, model=[], statusCode=status.HTTP_200_OK, single=True)
+            return getResponse(serializer=GetCommentSerializer, model=[], statusCode=status.HTTP_200_OK, single=True)
 
