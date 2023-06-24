@@ -28,6 +28,8 @@ export default function Comment({ postId }: params) {
     if (response.status === 200) {
       const body: comment = await response.json();
       setComment(body);
+    } else if (response.status === 204) {
+      setComment({ id: 1, comment: "", user: 1, username: "No comments" });
     }
   };
 
