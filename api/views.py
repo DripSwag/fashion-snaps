@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
 from .models import AuthToken, Comment, Post, User
-from .serializer import GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer
+from .serializer import GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer
 from .views_utils import getResponse
 import random
 
@@ -20,6 +20,16 @@ def login(request, username, password):
             except:
                 user[0].createToken()
         return getResponse(serializer=LoginSerializer, model=user, statusCode=status.HTTP_200_OK, single=True)
+
+@api_view(['GET'])
+def validateAuthorizationToken(request, tokenId):
+    if request.method == 'GET':
+        try:
+            token = AuthToken.objects.get(tokenId=tokenId).get()
+            serializer = TokenSerializer(token, many=False)
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        except:
+            return Response({ 'Unauthorized' }, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['POST'])

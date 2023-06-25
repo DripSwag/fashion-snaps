@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
@@ -27,6 +28,11 @@ async function clicked(
     const bodyPost: post = await fetch(
       "http://127.0.0.1:8000/api/post/get"
     ).then((response) => response.json());
+
+    Cookies.set("sessionId", bodyLogin["token"][0]["tokenId"], {
+      sameSite: "strict",
+    });
+
     router.push(
       "/homepage/" + bodyLogin["id"] + "?postId=" + bodyPost["id"].toString()
     );

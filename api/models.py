@@ -1,6 +1,6 @@
 from django.db import models
-from datetime import datetime
-from .SpotifyUtils import createTokenId, createDate
+from datetime import datetime, timedelta, timezone
+from .model_utils import createTokenId, createDate
 
 # Create your models here.
 
@@ -28,9 +28,15 @@ class Bookmark(models.Model):
 class AuthToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1, related_name='token')
     tokenId = models.CharField(max_length=20)
-    expiresIn = models.DateField(default=datetime.now, blank=True)
+    expiresIn = models.DateTimeField(default=datetime.now, blank=True)
 
     def update(self):
         self.tokenId = createTokenId()
         self.expiresIn = createDate()
         self.save()
+
+    def get(self):
+        if datetime.now(timezone(offset=timedelta())) < self.expiresIn:
+            return self
+        else:
+            return None
