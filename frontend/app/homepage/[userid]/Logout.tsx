@@ -8,7 +8,8 @@ export default function Logout() {
 
   function clicked() {
     Cookies.remove("sessionId");
-    router.push("/");
+    router.replace("/");
+    router.refresh();
   }
 
   return <button onClick={clicked}>Logout</button>;

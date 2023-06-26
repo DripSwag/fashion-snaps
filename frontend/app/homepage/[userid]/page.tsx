@@ -9,9 +9,7 @@ interface post {
 }
 
 async function getPost(postId: string) {
-  const response = await fetch("http://127.0.0.1:8000/api/post/get/" + postId, {
-    cache: "no-store",
-  });
+  const response = await fetch("http://127.0.0.1:8000/api/post/get/" + postId);
   return response.json();
 }
 
