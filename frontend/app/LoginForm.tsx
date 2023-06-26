@@ -30,7 +30,7 @@ async function clicked(
     ).then((response) => response.json());
 
     Cookies.set("sessionId", bodyLogin["token"][0]["tokenId"], {
-      sameSite: "strict",
+      sameSite: "Strict",
     });
 
     router.push(

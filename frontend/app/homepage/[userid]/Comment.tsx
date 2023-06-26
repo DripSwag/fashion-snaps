@@ -1,14 +1,14 @@
 "use client";
 
-interface params {
-  postId: string;
-}
-
 interface comment {
   id: number;
   comment: string;
   user: number;
   username: string;
+}
+
+interface params {
+  postId: string;
 }
 
 async function getComment(postId: string) {
