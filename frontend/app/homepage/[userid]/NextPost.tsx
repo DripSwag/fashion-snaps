@@ -22,7 +22,6 @@ export default function NextPost() {
     router.replace(
       "http://localhost:3000/homepage/1?postId=" + (await getPost())
     );
-    router.refresh();
   }
 
   return (
