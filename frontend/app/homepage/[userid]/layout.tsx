@@ -12,7 +12,8 @@ export default async function HomepageLayout({
   //Add middleware so I dont need to call get post because the cache is stored and not cleared because the nav is persistent
   return (
     <section className="h-screen w-full flex flex-col">
-      <nav>
+      <nav className="w-full p-4 flex gap-4">
+        <h1 className="mx-16 font-bold text-xl">Fashion Snaps</h1>
         <Link href={`/homepage/${params["userid"]}`}>Homepage</Link>
         <Link href={`/homepage/${params["userid"]}/account`}>Account</Link>
         <Logout />
