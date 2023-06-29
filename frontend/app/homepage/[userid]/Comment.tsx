@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 interface comment {
   id: number;
   comment: string;
@@ -7,29 +9,39 @@ interface comment {
   username: string;
 }
 
-interface params {
-  postId: string;
+interface post {
+  id: number;
+  image: string;
+  user: number;
 }
 
-async function getComment(postId: string) {
-  const response = await fetch(
-    "http://127.0.0.1:8000/api/comment/get/" + postId
-  );
-  if (response.status === 200) {
-    const body: comment = await response.json();
-    return body;
+export default function Comment({ postId, post }: { postId: string, post: post }) {
+  const [comment, setComment] = useState<comment>({
+    id: 1,
+    comment: "",
+    user: 1,
+    username: "",
+  });
+
+  async function getComment() {
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/comment/get/" + postId
+    );
+    if (response.status === 200) {
+      setComment(await response.json());
+    } else {
+      setComment({ id: 1, comment: "", user: 1, username: "No Comments" });
+    }
   }
-}
 
-export default async function Comment({ postId }: params) {
-  const comment = await getComment(postId);
+  useEffect(() => {
+    getComment();
+  }, [post]);
 
   return (
     <div className="w-1/2 absolute text-[10px] bottom-[5%] left-[5%] text-white">
-      <h2 className="font-semibold text-xl">
-        {comment ? comment["username"] : "No Comments"}
-      </h2>
-      <p>{comment ? comment["comment"] : ""}</p>
+      <h2 className="font-semibold text-xl">{comment["username"]}</h2>
+      <p>{comment["comment"]}</p>
     </div>
   );
 }
