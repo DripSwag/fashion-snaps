@@ -12,5 +12,9 @@ export default function Logout() {
     router.refresh();
   }
 
-  return <button onClick={clicked}>Logout</button>;
+  return (
+    <button onClick={clicked} className="mx-8">
+      Logout
+    </button>
+  );
 }

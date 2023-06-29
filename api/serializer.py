@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import AuthToken, Comment, Post, User
+from .models import AuthToken, Bookmark, Comment, Post, User
 
 class TokenSerializer(ModelSerializer):
     class Meta:
@@ -44,3 +44,9 @@ class GetCommentSerializer(ModelSerializer):
         representation['username'] = instance.user.username
 
         return representation
+
+class BookmarkSerializer(ModelSerializer):
+    class Meta:
+        model = Bookmark
+        fields = '__all__'
+

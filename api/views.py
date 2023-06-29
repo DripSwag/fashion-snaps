@@ -2,8 +2,8 @@ from django.http.multipartparser import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
-from .models import AuthToken, Comment, Post, User
-from .serializer import GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer
+from .models import AuthToken, Bookmark, Comment, Post, User
+from .serializer import BookmarkSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer
 from .views_utils import getResponse
 import random
 
@@ -77,4 +77,24 @@ def getComments(request, postId):
             return getResponse(serializer=GetCommentSerializer, model=[Comment.objects.all().filter(post=postId)[random.randint(0, count - 1)]], statusCode=status.HTTP_200_OK, single=True)
         else:
             return getResponse(serializer=GetCommentSerializer, model=[], statusCode=status.HTTP_200_OK, single=True)
+
+@api_view(['PUT'])
+def putBookmark(request):
+    if request.method == 'PUT':
+        data = request.data
+        try:
+            bookmark = Bookmark.objects.get(user=data['user'], post=data['post'])
+            bookmark.delete()
+            return Response({ 'Deleted' }, status=status.HTTP_200_OK)
+        except:
+            serializer = BookmarkSerializer(data=data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def getBookmark(request, userId, postId):
+    if request.method == 'GET':
+        bookmark = Bookmark.objects.filter(user=userId, post=postId)
+        return getResponse(serializer=BookmarkSerializer, model=bookmark, statusCode=status.HTTP_200_OK, single=True)
 
