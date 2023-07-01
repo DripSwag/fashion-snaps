@@ -17,7 +17,6 @@ async function getPosts(userId: string) {
   );
   if (response.status === 200) {
     const body = await response.json();
-    console.log(body);
     return body;
   }
 }
