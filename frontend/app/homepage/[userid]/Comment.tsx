@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 interface comment {
   id: number;
   comment: string;
@@ -15,28 +11,28 @@ interface post {
   user: number;
 }
 
-export default function Comment({ postId, post }: { postId: string, post: post }) {
-  const [comment, setComment] = useState<comment>({
-    id: 1,
-    comment: "",
-    user: 1,
-    username: "",
-  });
-
-  async function getComment() {
-    const response = await fetch(
-      "http://127.0.0.1:8000/api/comment/get/" + postId
-    );
-    if (response.status === 200) {
-      setComment(await response.json());
-    } else {
-      setComment({ id: 1, comment: "", user: 1, username: "No Comments" });
+async function getComment(postId: string) {
+  const response = await fetch(
+    "http://127.0.0.1:8000/api/comment/get/" + postId,
+    {
+      next: { revalidate: 1 },
     }
+  );
+  if (response.status === 200) {
+    return await response.json();
+  } else {
+    return { id: 1, comment: "", user: 1, username: "No Comments" };
   }
+}
 
-  useEffect(() => {
-    getComment();
-  }, [post]);
+export default async function Comment({
+  postId,
+  post,
+}: {
+  postId: string;
+  post: post;
+}) {
+  const comment: comment = await getComment(postId);
 
   return (
     <div className="w-1/2 absolute text-[10px] bottom-[5%] left-[5%] text-white">
