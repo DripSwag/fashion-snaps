@@ -30,15 +30,18 @@ export default async function Account({
 
   return (
     <main className="flex justify-center">
-      <div className="max-w-[1200px] flex flex-col gap-4 my-12">
+      <div className="container">
         <h1 className="font-bold text-4xl">Posts</h1>
         <div className="flex gap-8">
-          {posts &&
+          {posts ? (
             posts.map((data: post) => {
               return (
                 <Post img={data["image"]} id={data["id"]} key={data["id"]} />
               );
-            })}
+            })
+          ) : (
+            <p>You have currently have no posts</p>
+          )}
         </div>
       </div>
     </main>

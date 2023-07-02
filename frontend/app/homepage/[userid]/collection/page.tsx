@@ -26,11 +26,11 @@ export default async function Collection({
   const bookmarks = await getBookmarks(params["userid"]);
 
   return (
-    <main className="w-full">
-      <div className="max-w-[1200px] flex flex-col relative left-1/2 -translate-x-1/2 py-12">
+    <main className="w-full flex justify-center">
+      <div className="container">
         <h1 className="font-bold text-4xl">Your Collection</h1>
         <div className="flex gap-8 py-4">
-          {bookmarks &&
+          {bookmarks ? (
             bookmarks.map((data: bookmark) => {
               return (
                 <Post
@@ -40,7 +40,10 @@ export default async function Collection({
                   key={data.post.id}
                 />
               );
-            })}
+            })
+          ) : (
+            <p>You currently have no posts bookmarked</p>
+          )}
         </div>
       </div>
     </main>
