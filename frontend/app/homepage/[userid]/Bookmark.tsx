@@ -42,7 +42,7 @@ export default function Bookmark({
 
   useEffect(() => {
     onLoad();
-  }, []);
+  }, [postId]);
 
   return (
     <button
