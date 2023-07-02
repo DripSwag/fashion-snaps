@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, parser_classes, renderer_classes
 from rest_framework.views import status
 from .models import AuthToken, Bookmark, Comment, Post, User
-from .serializer import BookmarkSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer
+from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer
 from .views_utils import getResponse
 import random
 
@@ -91,6 +91,12 @@ def putBookmark(request):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def getUserBookmarks(request, userId):
+    if request.method == 'GET':
+        bookmark = Bookmark.objects.filter(user=userId)
+        return getResponse(serializer=BookmarksSerializer, model=bookmark, statusCode=status.HTTP_200_OK, single=False)
 
 @api_view(['GET'])
 def getBookmark(request, userId, postId):

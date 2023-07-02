@@ -16,6 +16,7 @@ export default async function HomepageLayout({
         <h1 className="mx-16 font-bold text-xl">Fashion Snaps</h1>
         <Link href={`/homepage/${params["userid"]}`}>Homepage</Link>
         <Link href={`/homepage/${params["userid"]}/account`}>Account</Link>
+        <a href={`/homepage/${params["userid"]}/collection`}>Collection</a>
         <Logout />
       </nav>
       {children}

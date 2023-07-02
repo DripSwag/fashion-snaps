@@ -11,5 +11,6 @@ urlpatterns = [
     path('comment/create', views.createComment),
     path('comment/get/<int:postId>', views.getComments),
     path('bookmark', views.putBookmark),
+    path('bookmark/<int:userId>', views.getUserBookmarks),
     path('bookmark/<int:userId>/<int:postId>', views.getBookmark),
 ]

@@ -1,4 +1,6 @@
-from rest_framework.serializers import ModelSerializer
+import json
+from rest_framework.serializers import ModelSerializer, RelatedField
+from rest_framework.utils import representation
 from .models import AuthToken, Bookmark, Comment, Post, User
 
 class TokenSerializer(ModelSerializer):
@@ -50,3 +52,9 @@ class BookmarkSerializer(ModelSerializer):
         model = Bookmark
         fields = '__all__'
 
+class BookmarksSerializer(ModelSerializer):
+    post = PostSerializer(read_only=True)
+
+    class Meta:
+        model = Bookmark
+        fields = ['id', 'post']
