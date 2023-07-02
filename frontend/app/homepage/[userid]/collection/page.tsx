@@ -1,3 +1,5 @@
+import Post from "./Post";
+
 interface bookmark {
   id: number;
   post: {
@@ -24,11 +26,23 @@ export default async function Collection({
   const bookmarks = await getBookmarks(params["userid"]);
 
   return (
-    <div>
-      {bookmarks &&
-        bookmarks.map((data: bookmark) => {
-          return <div>{data.post.id}</div>;
-        })}
-    </div>
+    <main className="w-full">
+      <div className="max-w-[1200px] flex flex-col relative left-1/2 -translate-x-1/2 py-12">
+        <h1 className="font-bold text-4xl">Your Collection</h1>
+        <div className="flex gap-8 py-4">
+          {bookmarks &&
+            bookmarks.map((data: bookmark) => {
+              return (
+                <Post
+                  image={data.post.image}
+                  postId={data.post.id.toString()}
+                  userId={params.userid}
+                  key={data.post.id}
+                />
+              );
+            })}
+        </div>
+      </div>
+    </main>
   );
 }
