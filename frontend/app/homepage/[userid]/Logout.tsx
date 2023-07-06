@@ -13,7 +13,10 @@ export default function Logout() {
   }
 
   return (
-    <button onClick={clicked} className="mx-8">
+    <button
+      onClick={clicked}
+      className="py-2 px-4 bg-black rounded-lg text-white ml-auto"
+    >
       Logout
     </button>
   );
