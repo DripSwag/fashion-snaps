@@ -1,4 +1,5 @@
 import { cache } from "react";
+import NewPost from "./NewPost";
 import Post from "./Post";
 
 interface post {
@@ -42,6 +43,7 @@ export default async function Account({
           ) : (
             <p>You have currently have no posts</p>
           )}
+          <NewPost />
         </div>
       </div>
     </main>
