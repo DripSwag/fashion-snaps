@@ -33,7 +33,8 @@ def validateAuthorizationToken(request, tokenId):
 
 
 @api_view(['POST'])
-def newPost(request):
+def newPost(request, userId):
+    print(request.data)
     if request.method == 'POST':
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
