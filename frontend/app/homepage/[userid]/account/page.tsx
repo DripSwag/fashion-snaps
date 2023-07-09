@@ -33,7 +33,7 @@ export default async function Account({
     <main className="flex justify-center">
       <div className="container">
         <h1 className="font-bold text-4xl">Posts</h1>
-        <div className="flex gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {posts ? (
             posts.map((data: post) => {
               return (
