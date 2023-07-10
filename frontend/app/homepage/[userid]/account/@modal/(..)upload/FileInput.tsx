@@ -5,7 +5,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function FileInput({ userId }: { userId: string }) {
   const [image, setImage] = useState<File>();
-  const [preview, setPreview] = useState<string>();
+  const [preview, setPreview] = useState<string>("");
   const router = useRouter();
 
   function changeHandler(e: ChangeEvent<HTMLInputElement>) {
@@ -41,11 +41,15 @@ export default function FileInput({ userId }: { userId: string }) {
       <input
         type="file"
         onChange={changeHandler}
-        accept="image/png"
+        accept="image/png, image/jpeg"
         required
       ></input>
       <button type="submit">Submit</button>
-      <img src={preview}></img>
+      <img
+        src={preview}
+        alt=""
+        className="w-full aspect-square max-w-[600px] border-0"
+      ></img>
     </form>
   );
 }
