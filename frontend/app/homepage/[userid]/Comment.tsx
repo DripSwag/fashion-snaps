@@ -12,7 +12,12 @@ interface post {
 }
 
 async function getComment(postId: string) {
-  const response = await fetch("http://127.0.0.1:8000/api/comment/get/" + postId);
+  const response = await fetch(
+    "http://127.0.0.1:8000/api/comment/get/" + postId,
+    {
+      cache: "no-store",
+    }
+  );
   if (response.status === 200) {
     return await response.json();
   } else {
