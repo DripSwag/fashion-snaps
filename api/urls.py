@@ -5,6 +5,7 @@ urlpatterns = [
     path('login/<str:username>/<str:password>/', views.login),
     path('authorization/<str:tokenId>', views.validateAuthorizationToken),
     path('post/create/<int:userId>', views.newPost),
+    path('post/delete/<int:postId>', views.deletePost),
     path('post/user/get/<int:userId>', views.getUserPosts),
     path('post/get', views.getRandomPost),
     path('post/get/<int:postId>', views.getPost),

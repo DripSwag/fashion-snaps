@@ -61,6 +61,16 @@ def getUserPosts(request, userId):
         posts = Post.objects.filter(user=userId)
         return getResponse(PostSerializer, posts, status.HTTP_200_OK, single=False)
 
+@api_view(['DELETE'])
+def deletePost(request, postId):
+    if request.method == 'DELETE':
+        try:
+            post = Post.objects.get(id=postId)
+            post.delete()
+            return Response({ 'Deleted' }, status=status.HTTP_200_OK)
+        except:
+            return Response({ 'No data' }, status=status.HTTP_204_NO_CONTENT)
+
 @api_view(['POST'])
 def createComment(request):
     serializer = PostComentSerializer(data=request.data)
