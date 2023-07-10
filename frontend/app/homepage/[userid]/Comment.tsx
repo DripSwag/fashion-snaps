@@ -35,9 +35,9 @@ export default async function Comment({
   const comment: comment = await getComment(postId);
 
   return (
-    <div className="w-1/2 absolute text-[10px] bottom-[5%] left-[5%] text-white">
-      <h2 className="font-semibold text-xl">{comment["username"]}</h2>
-      <p>{comment["comment"]}</p>
+    <div className="w-1/2 absolute bottom-[5%] left-[5%] text-white">
+      <h2 className="font-semibold text-2xl">{comment["username"]}</h2>
+      <p className="text-[9px] font-medium">{comment["comment"]}</p>
     </div>
   );
 }
