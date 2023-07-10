@@ -34,7 +34,6 @@ export default async function Homepage({
         <Comment postId={searchParams["postId"]} post={post} />
       </div>
       <NextPost />
-      <Bookmark userId={params["userid"]} postId={searchParams["postId"]} />
     </div>
   );
 }

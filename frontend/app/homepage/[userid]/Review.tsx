@@ -1,5 +1,7 @@
 "use client";
 
+import Bookmark from "./Bookmark";
+
 import { useRouter } from "next/navigation";
 import {
   createRef,
@@ -41,17 +43,28 @@ export default function Review({ userId, postId }: params) {
   }
 
   return (
-    <div>
+    <div className="w-max px-4 relative top-1/2 -translate-y-1/2">
       <textarea
         maxLength={500}
-        className="resize-none bg-neutral-100 h-64"
+        className="resize-none bg-neutral-200 h-64 rounded-lg p-2"
+        placeholder="Add your comment here"
         onChange={(event) => {
           setLength(event.target.textLength);
         }}
         ref={ref}
       ></textarea>
-      <p>{`${length}/500`}</p>
-      <button onClick={handleClick}>Post</button>
+      <div className="flex w-full justify-between items-center py-2">
+        <Bookmark userId={userId} postId={postId} />
+        <div className="flex gap-2 items-center">
+          <p className="text-neutral-600">{`${length}/500`}</p>
+          <button
+            onClick={handleClick}
+            className="px-4 py-2 text-white bg-black rounded-lg"
+          >
+            Post
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
