@@ -1,16 +1,12 @@
 "use client";
 
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  createRef,
-  FormEvent,
-  useState,
-} from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export default function FileInput({ userId }: { userId: string }) {
   const [image, setImage] = useState<File>();
   const [preview, setPreview] = useState<string>();
+  const router = useRouter();
 
   function changeHandler(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files) {
@@ -26,10 +22,17 @@ export default function FileInput({ userId }: { userId: string }) {
       formData.append("image", image);
 
       //No content type, idk why but I think its bad but its the only way it will work
-      const response = await fetch("http://127.0.0.1:8000/api/post/create/1", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/post/create/" + userId,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      if (response.status === 200) {
+        router.back();
+        router.refresh();
+      }
     }
   }
 
