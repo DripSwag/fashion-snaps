@@ -13,7 +13,12 @@ export default async function HomepageLayout({
   return (
     <section className="h-screen w-full flex flex-col items-center">
       <nav className="w-full h-16 py-4 px-4 flex items-center gap-4 max-w-[1200px]">
-        <h1 className="mx-4 font-bold text-xl">Fashion Snaps</h1>
+        <Link
+          href={`/homepage/${params["userid"]}`}
+          className="mx-4 font-bold text-xl"
+        >
+          Fashion Snaps
+        </Link>
         <Link href={`/homepage/${params["userid"]}`}>Homepage</Link>
         <Link href={`/homepage/${params["userid"]}/account`}>Account</Link>
         <a href={`/homepage/${params["userid"]}/collection`}>Collection</a>
