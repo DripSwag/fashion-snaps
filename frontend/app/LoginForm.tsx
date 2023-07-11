@@ -52,14 +52,15 @@ export default function LoginForm() {
   const router = useRouter();
 
   return (
-    <div>
-      <form>
+    <div className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4 items-around">
         <input
           placeholder="Username"
           type="text"
           onChange={(event) => {
             setUsername(event.target.value);
           }}
+          className="p-4 border-b-2"
         ></input>
         <input
           placeholder="Password"
@@ -67,12 +68,14 @@ export default function LoginForm() {
           onChange={(event) => {
             setPassword(event.target.value);
           }}
+          className="p-4 border-b-2"
         ></input>
       </form>
       <button
         onClick={() => {
           clicked(username, password, router, setIncorrect);
         }}
+        className="px-4 py-2 bg-black text-white w-max rounded-lg"
       >
         Login
       </button>
