@@ -37,19 +37,30 @@ export default function FileInput({ userId }: { userId: string }) {
   }
 
   return (
-    <form onSubmit={submit}>
-      <input
-        type="file"
-        onChange={changeHandler}
-        accept="image/png, image/jpeg"
-        required
-      ></input>
-      <button type="submit">Submit</button>
+    <form
+      onSubmit={submit}
+      className="h-full flex flex-col justify-center items-center"
+    >
       <img
         src={preview}
-        alt=""
+        alt=" "
         className="w-full aspect-square max-w-[600px] border-0"
       ></img>
+      <div className="flex py-4 py-2 px-4 border-2 rounded-lg">
+        <input
+          type="file"
+          onChange={changeHandler}
+          accept="image/png, image/jpeg"
+          className="file:px-4 file:py-2 file:mr-4 text-neutral-800"
+          required
+        ></input>
+        <button
+          type="submit"
+          className="bg-black px-4 py-2 text-white rounded-lg"
+        >
+          Submit
+        </button>
+      </div>
     </form>
   );
 }
