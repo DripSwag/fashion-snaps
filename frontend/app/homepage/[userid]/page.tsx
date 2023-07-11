@@ -24,12 +24,12 @@ export default async function Homepage({
   const post: post = await getPost(searchParams["postId"]);
 
   return (
-    <div className="h-full static">
+    <div className="h-full w-full relative">
       <Review userId={params["userid"]} postId={searchParams["postId"]} />
-      <div className="h-3/4 absolute w-max top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+      <div className="h-3/4 absolute top-1/2 -translate-y-1/2 w-max left-1/2 -translate-x-1/2">
         <img
           src={"http://127.0.0.1:8000" + post["image"]}
-          className="h-full"
+          className="h-full relative left-1/2 -translate-x-1/2"
         ></img>
         <Comment postId={searchParams["postId"]} post={post} />
       </div>
