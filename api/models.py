@@ -6,7 +6,7 @@ from .model_utils import createTokenId, createDate
 
 class User(models.Model):
     username = models.CharField(max_length=20)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=256)
 
     def createToken(self):
         authToken = AuthToken(user=self, tokenId=createTokenId(), expiresIn=createDate())

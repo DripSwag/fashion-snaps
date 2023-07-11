@@ -9,10 +9,10 @@ import random
 
 # Create your views here.
 
-@api_view(['GET'])
-def login(request, username, password):
-    if request.method == 'GET':
-        user = User.objects.filter(username=username, password=password)
+@api_view(['POST'])
+def login(request):
+    if request.method == 'POST':
+        user = User.objects.filter(username=request.data['username'], password=request.data['password'])
         if user.count() == 1:
             try:
                 token = AuthToken.objects.get(user=user[0])
