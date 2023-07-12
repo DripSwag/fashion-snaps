@@ -41,7 +41,7 @@ async function clicked(
       "/homepage/" + bodyLogin["id"] + "?postId=" + bodyPost["id"].toString()
     );
   } else {
-    setIncorrect(false);
+    setIncorrect(true);
   }
 }
 
@@ -53,7 +53,10 @@ export default function LoginForm() {
 
   return (
     <div className="flex flex-col gap-4">
-      <form className="flex flex-col gap-4 items-around">
+      <form className="flex flex-col gap-4 items-center justify-center">
+        {incorrect && (
+          <p className="text-red-500 font-semibold">Credentials incorrect</p>
+        )}
         <input
           placeholder="Username"
           type="text"
@@ -75,11 +78,10 @@ export default function LoginForm() {
         onClick={() => {
           clicked(username, password, router, setIncorrect);
         }}
-        className="px-4 py-2 bg-black text-white w-max rounded-lg"
+        className="px-4 py-2 my-4 bg-black text-white w-max rounded-lg"
       >
         Login
       </button>
-      {incorrect && <p>Credentials inccorect</p>}
     </div>
   );
 }
