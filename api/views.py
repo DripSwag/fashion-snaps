@@ -1,11 +1,11 @@
-from django.http.multipartparser import MultiPartParser
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, parser_classes, renderer_classes
+from rest_framework.decorators import api_view
 from rest_framework.views import status
 from .models import AuthToken, Bookmark, Comment, Post, User
-from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer
+from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer, UserSerializer
 from .views_utils import getResponse
 import random
+from hashlib import sha256
 
 # Create your views here.
 
@@ -21,6 +21,17 @@ def login(request):
                 user[0].createToken()
         return getResponse(serializer=LoginSerializer, model=user, statusCode=status.HTTP_200_OK, single=True)
 
+@api_view(['POST'])
+def createUser(request):
+    if request.method == 'POST':
+        data = request.data
+        data['password'] = sha256(data['password'].encode('utf-8')).hexdigest()
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
 @api_view(['GET'])
 def validateAuthorizationToken(request, tokenId):
     if request.method == 'GET':
@@ -34,7 +45,6 @@ def validateAuthorizationToken(request, tokenId):
 
 @api_view(['POST'])
 def newPost(request, userId):
-    print(request.data)
     if request.method == 'POST':
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
