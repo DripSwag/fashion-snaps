@@ -44,7 +44,7 @@ export default function FileInput({ userId }: { userId: string }) {
       <img
         src={preview}
         alt=" "
-        className="w-full aspect-square max-w-[600px] border-0"
+        className="h-full aspect-auto max-w-[600px] border-0"
       ></img>
       <div className="flex py-4 py-2 px-4 border-2 rounded-lg">
         <input
