@@ -8,7 +8,7 @@ export default function AccountLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="w-full">
       {children}
       {modal}
     </div>

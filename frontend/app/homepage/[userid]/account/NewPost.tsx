@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NewPost() {
   return (
-    <Link href={"upload/"} className="post w-full h-full">
+    <Link href={"upload/"} className="post w-full h-full min-h-[400px]">
       <p className="font-bold text-4xl absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
         +
       </p>
