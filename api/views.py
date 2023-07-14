@@ -12,7 +12,7 @@ from hashlib import sha256
 @api_view(['POST'])
 def login(request):
     if request.method == 'POST':
-        user = User.objects.filter(username=request.data['username'], password=request.data['password'])
+        user = User.objects.filter(username=request.data['username'], password=sha256(request.data['password'].encode('utf-8')).hexdigest())
         if user.count() == 1:
             try:
                 token = AuthToken.objects.get(user=user[0])
