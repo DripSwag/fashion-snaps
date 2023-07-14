@@ -68,7 +68,11 @@ def getRandomPost(request):
 def getPost(request, postId):
     if request.method == 'GET':
         post = Post.objects.filter(id=postId)
-        return getResponse(PostSerializer, post, status.HTTP_200_OK, single=True)
+        if post.count() != 0:
+            return getResponse(PostSerializer, post, status.HTTP_200_OK, single=True)
+        else:
+            return Response({ "id": 0, "image": "", "user": 0 })
+
 
 @api_view(['GET'])
 def getUserPosts(request, userId):
