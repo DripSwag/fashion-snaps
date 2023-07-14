@@ -55,9 +55,12 @@ def newPost(request, userId):
 @api_view(['GET'])
 def getRandomPost(request):
     if request.method == 'GET':
-        post = Post.objects.all()[random.randint(0, Post.objects.count() - 1)]
-        serializer = RandomPostSerializer(post)
-        return Response(serializer.data)
+        if Post.objects.count() != 0:
+            post = Post.objects.all()[random.randint(0, Post.objects.count() - 1)]
+            serializer = RandomPostSerializer(post)
+            return Response(serializer.data)
+        else:
+            return Response({ "id": 0 }, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def getPost(request, postId):
