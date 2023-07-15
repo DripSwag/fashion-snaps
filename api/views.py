@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import status
-from .models import AuthToken, Bookmark, Comment, Post, User, UserPostQueue
+from .models import AuthToken, Bookmark, Comment, Post, User, UserPostQueue, UserPostQueueEntity
 from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer, UserPostQueueSerializer, UserSerializer
 from .views_utils import getResponse
 import random
@@ -80,6 +80,17 @@ def userQueueEnqueue(request):
             return Response({ 'Added' }, status=status.HTTP_201_CREATED)
         except:
             return Response({ 'Fail' }, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def userQueueDelete(request, userId):
+    if request.method == 'DELETE':
+        try:
+            queue = UserPostQueue.objects.get(user=userId)
+            posts = UserPostQueueEntity.objects.filter(queue=queue)
+            posts.delete()
+            return Response({ 'Deleted' }, status=status.HTTP_200_OK)
+        except:
+            return Response({ 'No data' }, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
 def getPost(request, postId):

@@ -16,7 +16,6 @@ async function getPost(userId: string) {
     },
     body: JSON.stringify({ user: parseInt(userId) }),
   });
-  console.log(response);
   const body: post = await response.json();
   const postId = body.id !== undefined ? body.id : "0";
   return postId;

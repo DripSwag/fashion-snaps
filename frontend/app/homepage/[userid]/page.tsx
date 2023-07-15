@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import Review from "./Review";
 import NextPost from "./NextPost";
 import Bookmark from "./Bookmark";
+import PostHistroyClear from "./PostHistoryClear";
 
 interface post {
   id: number;
@@ -50,9 +51,12 @@ export default async function Homepage({
           <NextPost userId={params.userid} />
         </>
       ) : (
-        <p className="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-max">
-          There are currently no posts to view
-        </p>
+        <div className="h-full w-full">
+          <p className="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-max">
+            There are currently no posts to view
+          </p>
+          <PostHistroyClear userId={params.userid} />
+        </div>
       )}
     </div>
   );
