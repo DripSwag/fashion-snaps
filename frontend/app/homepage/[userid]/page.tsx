@@ -10,10 +10,11 @@ interface post {
   user: number;
 }
 
-async function getPost(postId: string) {
+async function getPost(postId: string, userId: string) {
   const postBody: post = await fetch(
     "http://127.0.0.1:8000/api/post/get/" + postId
   ).then((response) => response.json());
+
   const enqueueResponse = await fetch(
     "http://127.0.0.1:8000/api/post/enqueue",
     {
@@ -21,7 +22,7 @@ async function getPost(postId: string) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user: postBody.user, post: postBody.id }),
+      body: JSON.stringify({ user: parseInt(userId), post: postBody.id }),
     }
   );
   return postBody;
@@ -34,7 +35,7 @@ export default async function Homepage({
   params: { userid: string };
   searchParams: { postId: string };
 }) {
-  const post: post = await getPost(searchParams["postId"]);
+  const post: post = await getPost(params.userid, searchParams["postId"]);
 
   return (
     <div className="h-full w-full relative">
