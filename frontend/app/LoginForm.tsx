@@ -11,7 +11,7 @@ interface login {
 }
 
 interface post {
-  id: number;
+  id: number | null;
 }
 
 async function clicked(
@@ -29,8 +29,14 @@ async function clicked(
   });
   if (responseLogin.status === 200) {
     const bodyLogin: login = await responseLogin.json();
-    const responsePost = await fetch("http://127.0.0.1:8000/api/post/get");
-    console.log(responsePost.status);
+
+    const responsePost = await fetch("http://127.0.0.1:8000/api/post/get", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: bodyLogin.id }),
+    });
 
     const bodyPost: post = await responsePost.json();
 
@@ -38,9 +44,10 @@ async function clicked(
       sameSite: "Strict",
     });
 
-    router.push(
-      "/homepage/" + bodyLogin["id"] + "?postId=" + bodyPost["id"].toString()
-    );
+    const pathPostId =
+      bodyPost["id"] !== undefined ? bodyPost.id?.toString() : "0";
+    const path = "/homepage/" + bodyLogin.id + "?postId=" + pathPostId;
+    router.push(path);
   } else {
     setIncorrect(true);
   }
