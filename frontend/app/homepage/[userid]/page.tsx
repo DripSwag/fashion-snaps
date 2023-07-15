@@ -35,7 +35,7 @@ export default async function Homepage({
   params: { userid: string };
   searchParams: { postId: string };
 }) {
-  const post: post = await getPost(params.userid, searchParams["postId"]);
+  const post: post = await getPost(searchParams["postId"], params.userid);
 
   return (
     <div className="h-full w-full relative">

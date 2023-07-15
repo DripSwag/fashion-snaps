@@ -10,9 +10,12 @@ export default function PostHistroyClear({ userId }: { userId: string }) {
   const router = useRouter();
 
   async function handleClick() {
-    const response = await fetch("http://127.0.0.1:8000/api/post/dequeue/3", {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      "http://127.0.0.1:8000/api/post/dequeue/" + userId,
+      {
+        method: "DELETE",
+      }
+    );
     if (response.status === 200) {
       const bodyPost: post = await fetch("http://127.0.0.1:8000/api/post/get", {
         method: "PUT",
