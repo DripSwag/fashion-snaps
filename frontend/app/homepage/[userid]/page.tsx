@@ -10,8 +10,20 @@ interface post {
 }
 
 async function getPost(postId: string) {
-  const response = await fetch("http://127.0.0.1:8000/api/post/get/" + postId);
-  return response.json();
+  const postBody: post = await fetch(
+    "http://127.0.0.1:8000/api/post/get/" + postId
+  ).then((response) => response.json());
+  const enqueueResponse = await fetch(
+    "http://127.0.0.1:8000/api/post/enqueue",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: postBody.user, post: postBody.id }),
+    }
+  );
+  return postBody;
 }
 
 export default async function Homepage({
@@ -35,7 +47,7 @@ export default async function Homepage({
             ></img>
             <Comment postId={searchParams["postId"]} post={post} />
           </div>
-          <NextPost />
+          <NextPost userId={params.userid} />
         </>
       ) : (
         <p className="relative left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-max">

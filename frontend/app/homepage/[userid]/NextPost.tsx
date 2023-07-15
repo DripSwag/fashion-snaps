@@ -7,20 +7,30 @@ interface post {
   id: number;
 }
 
-async function getPost() {
+async function getPost(userId: string) {
   const response = await fetch("http://127.0.0.1:8000/api/post/get", {
     cache: "no-store",
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: parseInt(userId) }),
   });
+  console.log(response);
   const body: post = await response.json();
-  return body["id"].toString();
+  const postId = body.id !== undefined ? body.id : "0";
+  return postId;
 }
 
-export default function NextPost() {
+export default function NextPost({ userId }: { userId: string }) {
   const router = useRouter();
 
   async function clicked() {
     router.replace(
-      "http://localhost:3000/homepage/1?postId=" + (await getPost())
+      "http://localhost:3000/homepage/" +
+        userId +
+        "?postId=" +
+        (await getPost(userId))
     );
   }
 
