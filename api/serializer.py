@@ -1,7 +1,8 @@
 import json
+from django.forms import fields
 from rest_framework.serializers import ModelSerializer, RelatedField
 from rest_framework.utils import representation
-from .models import AuthToken, Bookmark, Comment, Post, User
+from .models import AuthToken, Bookmark, Comment, Post, User, UserPostQueue
 
 class TokenSerializer(ModelSerializer):
     class Meta:
@@ -63,3 +64,9 @@ class BookmarksSerializer(ModelSerializer):
     class Meta:
         model = Bookmark
         fields = ['id', 'post']
+
+class UserPostQueueSerializer(ModelSerializer):
+    class Meta:
+        model = UserPostQueue
+        fields = '__all__'
+

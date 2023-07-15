@@ -1,6 +1,9 @@
+from http.client import NON_AUTHORITATIVE_INFORMATION
+import random
 from django.db import models
 from datetime import datetime, timedelta, timezone
 from .model_utils import createTokenId, createDate
+from django.db.models import Q
 
 # Create your models here.
 
@@ -40,3 +43,24 @@ class AuthToken(models.Model):
             return self
         else:
             return None
+
+class UserPostQueue(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+
+    def enqueuePost(self, postId: int):
+        post = UserPostQueueEntity(post=postId, queue=self.id)
+        post.save()
+
+    def getRandomPost(self):
+        visited = UserPostQueueEntity.objects.filter(queue=self.id).values_list('post', flat=True)
+        visited = list(visited)
+        notVisited = Post.objects.filter(~Q(id__in=visited))
+        if notVisited.count() != 0:
+            return notVisited[random.randint(0, notVisited.count() - 1)]
+        else:
+            return
+
+class UserPostQueueEntity(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=1)
+    queue = models.ForeignKey(UserPostQueue, on_delete=models.CASCADE, default=1)
+

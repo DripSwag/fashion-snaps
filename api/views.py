@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import status
-from .models import AuthToken, Bookmark, Comment, Post, User
-from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer, UserSerializer
+from .models import AuthToken, Bookmark, Comment, Post, User, UserPostQueue
+from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer, UserPostQueueSerializer, UserSerializer
 from .views_utils import getResponse
 import random
 from hashlib import sha256
@@ -54,15 +54,22 @@ def newPost(request, userId):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-@api_view(['GET'])
+@api_view(['PUT'])
 def getRandomPost(request):
-    if request.method == 'GET':
-        if Post.objects.count() != 0:
-            post = Post.objects.all()[random.randint(0, Post.objects.count() - 1)]
-            serializer = RandomPostSerializer(post)
+    if request.method == 'PUT':
+        queue = UserPostQueue.objects.filter(user=request.data['user'])
+        if queue.count() == 1:
+            post = queue[0].getRandomPost()
+            serializer = PostSerializer(post, many=False)
             return Response(serializer.data)
         else:
-            return Response({ "id": 0 }, status=status.HTTP_200_OK)
+            serializer = UserPostQueueSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                queue = UserPostQueue.objects.filter(user=request.data['user'])
+                post = queue[0].getRandomPost()
+                serializer = PostSerializer(post, many=False)
+                return Response(serializer.data)
 
 @api_view(['GET'])
 def getPost(request, postId):
