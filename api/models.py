@@ -48,8 +48,9 @@ class UserPostQueue(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def enqueuePost(self, postId: int):
-        post = UserPostQueueEntity(post=postId, queue=self.id)
-        post.save()
+        post = Post.objects.get(id=postId)
+        record = UserPostQueueEntity(post=post, queue=self)
+        record.save()
 
     def getRandomPost(self):
         visited = UserPostQueueEntity.objects.filter(queue=self.id).values_list('post', flat=True)
@@ -58,7 +59,7 @@ class UserPostQueue(models.Model):
         if notVisited.count() != 0:
             return notVisited[random.randint(0, notVisited.count() - 1)]
         else:
-            return
+            return None
 
 class UserPostQueueEntity(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, default=1)

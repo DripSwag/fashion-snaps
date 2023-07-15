@@ -9,6 +9,7 @@ urlpatterns = [
     path('post/delete/<int:postId>', views.deletePost),
     path('post/user/get/<int:userId>', views.getUserPosts),
     path('post/get', views.getRandomPost),
+    path('post/enqueue', views.userQueueEnqueue),
     path('post/get/<int:postId>', views.getPost),
     path('comment/create', views.createComment),
     path('comment/get/<int:postId>', views.getComments),

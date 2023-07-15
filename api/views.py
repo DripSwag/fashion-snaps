@@ -71,6 +71,16 @@ def getRandomPost(request):
                 serializer = PostSerializer(post, many=False)
                 return Response(serializer.data)
 
+@api_view(['POST'])
+def userQueueEnqueue(request):
+    if request.method == 'POST':
+        try:
+            queue = UserPostQueue.objects.get(user=request.data['user'])
+            queue.enqueuePost(request.data['post'])
+            return Response({ 'Added' }, status=status.HTTP_201_CREATED)
+        except:
+            return Response({ 'Fail' }, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET'])
 def getPost(request, postId):
     if request.method == 'GET':
