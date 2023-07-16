@@ -1,4 +1,4 @@
-const API_ORIGIN = "http://127.0.0.1:8000/api/";
+const API_ORIGIN: string = process.env.API_ORIGIN ? process.env.API_ORIGIN : "";
 
 export async function POST(request: Request) {
   const { searchParams } = new URL(request.url);
