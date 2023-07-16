@@ -11,9 +11,11 @@ interface post {
 async function getImage(postId: string) {
   try {
     const post: post = await fetch(
-      process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get/" + postId
+      process.env.NEXT_PUBLIC_URL_ORIGIN +
+        "/api/images?endpoint=post/get/" +
+        postId
     ).then((response) => response.json());
-    return "http://127.0.0.1:8000" + post["image"];
+    return post["image"];
   } catch {
     return "";
   }
