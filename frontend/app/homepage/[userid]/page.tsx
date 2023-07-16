@@ -16,7 +16,7 @@ async function getPost(postId: string, userId: string) {
   ).then((response) => response.json());
 
   const enqueueResponse = await fetch(
-    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endponit=post/enqueue",
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/enqueue",
     {
       method: "POST",
       headers: {
