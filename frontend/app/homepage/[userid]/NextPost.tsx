@@ -26,10 +26,7 @@ export default function NextPost({ userId }: { userId: string }) {
 
   async function clicked() {
     router.replace(
-      "http://localhost:3000/homepage/" +
-        userId +
-        "?postId=" +
-        (await getPost(userId))
+      "/homepage/" + userId + "?postId=" + (await getPost(userId))
     );
   }
 

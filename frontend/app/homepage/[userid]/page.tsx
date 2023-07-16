@@ -11,9 +11,9 @@ interface post {
 }
 
 async function getPost(postId: string, userId: string) {
-  const postBody: post = await fetch(
-    "http://127.0.0.1:8000/api/post/get/" + postId
-  ).then((response) => response.json());
+  const postBody: post = await fetch(process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get/" + postId).then((response) => response.json());
+
+  console.log(postBody);
 
   const enqueueResponse = await fetch(
     "http://127.0.0.1:8000/api/post/enqueue",

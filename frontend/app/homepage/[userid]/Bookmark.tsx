@@ -29,9 +29,14 @@ export default function Bookmark({
     }
   }
 
+  //"http://127.0.0.1:8000/api/bookmark/" + userId + "/" + postId
   async function onLoad() {
     const response = await fetch(
-      "http://127.0.0.1:8000/api/bookmark/" + userId + "/" + postId
+      process.env.NEXT_PUBLIC_URL_ORIGIN +
+        "/api?endpoint=bookmark/" +
+        userId +
+        "/" +
+        postId
     );
     if (response.status === 204) {
       setClicked(false);

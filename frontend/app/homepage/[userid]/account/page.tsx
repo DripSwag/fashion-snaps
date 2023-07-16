@@ -1,4 +1,3 @@
-import { cache } from "react";
 import NewPost from "./NewPost";
 import Post from "./Post";
 
@@ -10,7 +9,9 @@ interface post {
 
 async function getPosts(userId: string) {
   const response = await fetch(
-    "http://127.0.0.1:8000/api/post/user/get/" + userId,
+    process.env.NEXT_PUBLIC_URL_ORIGIN +
+      "/api?endpoint=post/user/get/" +
+      userId,
     {
       //Change to use tag revalidation
       cache: "no-store",

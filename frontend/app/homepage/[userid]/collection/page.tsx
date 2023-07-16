@@ -10,9 +10,12 @@ interface bookmark {
 }
 
 async function getBookmarks(userid: string) {
-  const response = await fetch("http://127.0.0.1:8000/api/bookmark/" + userid, {
-    cache: "no-store",
-  });
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=bookmark/" + userid,
+    {
+      cache: "no-store",
+    }
+  );
   if (response.status === 200) {
     return await response.json();
   }

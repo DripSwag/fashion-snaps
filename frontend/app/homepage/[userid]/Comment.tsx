@@ -13,7 +13,7 @@ interface post {
 
 async function getComment(postId: string) {
   const response = await fetch(
-    "http://127.0.0.1:8000/api/comment/get/" + postId,
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=comment/get/" + postId,
     {
       cache: "no-store",
     }
