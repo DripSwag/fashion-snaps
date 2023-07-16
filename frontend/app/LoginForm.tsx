@@ -33,13 +33,17 @@ async function clicked(
   if (responseLogin.status === 200) {
     const bodyLogin: login = await responseLogin.json();
 
-    const responsePost = await fetch("http://127.0.0.1:8000/api/post/get", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: bodyLogin.id }),
-    });
+    //http://127.0.0.1:8000/api/post/get
+    const responsePost = await fetch(
+      process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user: bodyLogin.id }),
+      }
+    );
 
     const bodyPost: post = await responsePost.json();
 

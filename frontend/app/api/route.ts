@@ -19,3 +19,15 @@ export async function POST(request: Request) {
   });
   return response;
 }
+export async function PUT(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const endpoint = searchParams.get("endpoint");
+  const response = await fetch(API_ORIGIN + endpoint, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(await request.json()),
+  });
+  return response;
+}

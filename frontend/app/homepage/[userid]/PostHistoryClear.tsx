@@ -17,13 +17,16 @@ export default function PostHistroyClear({ userId }: { userId: string }) {
       }
     );
     if (response.status === 200) {
-      const bodyPost: post = await fetch("http://127.0.0.1:8000/api/post/get", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: parseInt(userId) }),
-      }).then((response) => response.json());
+      const bodyPost: post = await fetch(
+        process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user: parseInt(userId) }),
+        }
+      ).then((response) => response.json());
 
       const pathPostId =
         bodyPost.id !== undefined ? bodyPost.id?.toString() : "0";

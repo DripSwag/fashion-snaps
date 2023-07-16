@@ -8,14 +8,18 @@ interface post {
 }
 
 async function getPost(userId: string) {
-  const response = await fetch("http://127.0.0.1:8000/api/post/get", {
-    cache: "no-store",
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ user: parseInt(userId) }),
-  });
+  //http://127.0.0.1:8000/api/post/get
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get",
+    {
+      cache: "no-store",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: parseInt(userId) }),
+    }
+  );
   const body: post = await response.json();
   const postId = body.id !== undefined ? body.id : "0";
   return postId;

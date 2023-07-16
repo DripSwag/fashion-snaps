@@ -12,16 +12,19 @@ export default function Bookmark({
   const [clicked, setClicked] = useState<boolean>();
 
   async function pressed() {
-    const response = await fetch("http://127.0.0.1:8000/api/bookmark", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: userId,
-        post: postId,
-      }),
-    });
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=bookmark",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: userId,
+          post: postId,
+        }),
+      }
+    );
     if (response.status === 200) {
       setClicked(false);
     } else {

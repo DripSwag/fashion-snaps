@@ -7,14 +7,17 @@ interface post {
 }
 
 async function getHomepageUrl(userId: string) {
-  const body: post = await fetch("http://127.0.0.1:8000/api/post/get", {
-    cache: "no-store",
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ user: parseInt(userId) }),
-  }).then((response) => response.json());
+  const body: post = await fetch(
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get",
+    {
+      cache: "no-store",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: parseInt(userId) }),
+    }
+  ).then((response) => response.json());
 
   const pathPostId = body.id !== undefined ? body.id?.toString() : "0";
   return "/homepage/" + userId + "?postId=" + pathPostId;
