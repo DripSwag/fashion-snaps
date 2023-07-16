@@ -36,7 +36,7 @@ export default function Bookmark({
   async function onLoad() {
     const response = await fetch(
       process.env.NEXT_PUBLIC_URL_ORIGIN +
-        "/api?endpoint=bookmark/" +
+        "/api/bookmark?endpoint=bookmark/" +
         userId +
         "/" +
         postId
