@@ -23,17 +23,20 @@ export default function Review({ userId, postId }: params) {
 
   async function handleClick() {
     if (ref.current?.value) {
-      const response = await fetch("http://127.0.0.1:8000/api/comment/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user: userId,
-          post: postId,
-          comment: ref.current.value,
-        }),
-      });
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=comment/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user: userId,
+            post: postId,
+            comment: ref.current.value,
+          }),
+        }
+      );
       if (response.status === 200) {
         ref.current.value = "";
         setLength(0);

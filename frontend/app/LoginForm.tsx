@@ -20,13 +20,16 @@ async function clicked(
   router: AppRouterInstance,
   setIncorrect: Dispatch<SetStateAction<boolean>>
 ) {
-  const responseLogin = await fetch("http://127.0.0.1:8000/api/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username: username, password: password }),
-  });
+  const responseLogin = await fetch(
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: username, password: password }),
+    }
+  );
   if (responseLogin.status === 200) {
     const bodyLogin: login = await responseLogin.json();
 
