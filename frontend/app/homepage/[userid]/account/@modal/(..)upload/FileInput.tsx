@@ -22,8 +22,11 @@ export default function FileInput({ userId }: { userId: string }) {
       formData.append("image", image);
 
       //No content type, idk why but I think its bad but its the only way it will work
+      //"http://127.0.0.1:8000/api/post/create/" + userId
       const response = await fetch(
-        "http://127.0.0.1:8000/api/post/create/" + userId,
+        process.env.NEXT_PUBLIC_URL_ORIGIN +
+          "/api/post?endpoint=post/create/" +
+          userId,
         {
           method: "POST",
           body: formData,
