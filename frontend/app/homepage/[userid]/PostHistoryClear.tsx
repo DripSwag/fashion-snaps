@@ -11,7 +11,9 @@ export default function PostHistroyClear({ userId }: { userId: string }) {
 
   async function handleClick() {
     const response = await fetch(
-      "http://127.0.0.1:8000/api/post/dequeue/" + userId,
+      process.env.NEXT_PUBLIC_URL_ORIGIN +
+        "/api?endpoint=post/dequeue/" +
+        userId,
       {
         method: "DELETE",
       }

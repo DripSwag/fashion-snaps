@@ -7,7 +7,9 @@ export default function DeletePost({ postId }: { postId: string }) {
 
   async function handleClick() {
     const response = await fetch(
-      "http://127.0.0.1:8000/api/post/delete/" + postId,
+      process.env.NEXT_PUBLIC_URL_ORIGIN +
+        "/api?endpoint=post/delete/" +
+        postId,
       {
         method: "DELETE",
       }

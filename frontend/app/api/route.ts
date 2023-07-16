@@ -19,6 +19,7 @@ export async function POST(request: Request) {
   });
   return response;
 }
+
 export async function PUT(request: Request) {
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
@@ -28,6 +29,15 @@ export async function PUT(request: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(await request.json()),
+  });
+  return response;
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const endpoint = searchParams.get("endpoint");
+  const response = await fetch(API_ORIGIN + endpoint, {
+    method: "DELETE",
   });
   return response;
 }
