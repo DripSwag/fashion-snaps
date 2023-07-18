@@ -12,7 +12,10 @@ export default function Post({ img, id }: { img: string; id: number }) {
   }
 
   return (
-    <div onClick={clicked} className="post col-span-1 w-full">
+    <div
+      onClick={clicked}
+      className="post col-span-1 w-full hover:cursor-pointer"
+    >
       <img
         src={"http://127.0.0.1:8000" + img}
         className="aspect-auto w-[80%] relative left-1/2 -translate-x-1/2"
