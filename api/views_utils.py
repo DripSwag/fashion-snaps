@@ -16,7 +16,6 @@ def checkAuthToken(headers):
     if 'AuthToken' in headers:
         try:
             token = AuthToken.objects.get(tokenId=headers['AuthToken'])
-            print(token.get())
             if token.get() == None:
                 return Response({ 'Not Allowed' }, status=status.HTTP_401_UNAUTHORIZED)
             return None
