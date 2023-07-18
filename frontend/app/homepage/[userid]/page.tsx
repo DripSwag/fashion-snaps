@@ -1,8 +1,9 @@
 import Comment from "./Comment";
 import Review from "./Review";
 import NextPost from "./NextPost";
-import Bookmark from "./Bookmark";
 import PostHistroyClear from "./PostHistoryClear";
+import { cookies } from "next/dist/client/components/headers";
+import { getSessionIdServer } from "@/scripts/getSessionId";
 
 interface post {
   id: number;
@@ -11,8 +12,15 @@ interface post {
 }
 
 async function getPost(postId: string, userId: string) {
+  const sessionId = getSessionIdServer(cookies());
+
   const postBody: post = await fetch(
-    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get/" + postId
+    process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=post/get/" + postId,
+    {
+      headers: {
+        sessionId: sessionId,
+      },
+    }
   ).then((response) => response.json());
 
   const enqueueResponse = await fetch(
@@ -21,6 +29,7 @@ async function getPost(postId: string, userId: string) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        sessionId: sessionId,
       },
       body: JSON.stringify({ user: parseInt(userId), post: postBody.id }),
     }

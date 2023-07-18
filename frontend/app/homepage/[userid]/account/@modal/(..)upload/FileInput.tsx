@@ -1,5 +1,7 @@
 "use client";
 
+import {getSessionidClient} from "@/scripts/getSessionId";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -29,6 +31,9 @@ export default function FileInput({ userId }: { userId: string }) {
           userId,
         {
           method: "POST",
+          headers: {
+            sessionId: getSessionidClient(Cookies.get('sessionId'))
+          },
           body: formData,
         }
       );

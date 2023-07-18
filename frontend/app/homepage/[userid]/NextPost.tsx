@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { getSessionidClient } from "@/scripts/getSessionId";
 
 interface post {
   id: number;
@@ -16,6 +17,7 @@ async function getPost(userId: string) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        sessionId: getSessionidClient(Cookies.get("sessionId"))
       },
       body: JSON.stringify({ user: parseInt(userId) }),
     }

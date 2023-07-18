@@ -1,3 +1,5 @@
+import {getSessionIdServer} from "@/scripts/getSessionId";
+import {cookies} from "next/dist/client/components/headers";
 import NewPost from "./NewPost";
 import Post from "./Post";
 
@@ -15,6 +17,9 @@ async function getPosts(userId: string) {
     {
       //Change to use tag revalidation
       cache: "no-store",
+      headers: {
+        sessionId: getSessionIdServer(cookies())
+      }
     }
   );
   if (response.status === 200) {

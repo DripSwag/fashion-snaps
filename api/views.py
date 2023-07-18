@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.views import status
 from .models import AuthToken, Bookmark, Comment, Post, User, UserPostQueue, UserPostQueueEntity
 from .serializer import BookmarkSerializer, BookmarksSerializer, GetCommentSerializer, LoginSerializer, PostComentSerializer, RandomPostSerializer, PostSerializer, TokenSerializer, UserPostQueueSerializer, UserSerializer
-from .views_utils import getResponse
+from .views_utils import checkAuthToken, getResponse
 import random
 from hashlib import sha256
 
@@ -45,6 +45,9 @@ def validateAuthorizationToken(request, tokenId):
 
 @api_view(['POST'])
 def newPost(request, userId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'POST':
         data = request.data
         data['user'] = userId
@@ -56,6 +59,9 @@ def newPost(request, userId):
 
 @api_view(['PUT'])
 def getRandomPost(request):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'PUT':
         queue = UserPostQueue.objects.filter(user=request.data['user'])
         if queue.count() == 1:
@@ -73,6 +79,9 @@ def getRandomPost(request):
 
 @api_view(['POST'])
 def userQueueEnqueue(request):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'POST':
         try:
             queue = UserPostQueue.objects.get(user=request.data['user'])
@@ -83,6 +92,9 @@ def userQueueEnqueue(request):
 
 @api_view(['DELETE'])
 def userQueueDelete(request, userId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'DELETE':
         try:
             queue = UserPostQueue.objects.get(user=userId)
@@ -94,6 +106,9 @@ def userQueueDelete(request, userId):
 
 @api_view(['GET'])
 def getPost(request, postId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'GET':
         post = Post.objects.filter(id=postId)
         if post.count() != 0:
@@ -104,12 +119,18 @@ def getPost(request, postId):
 
 @api_view(['GET'])
 def getUserPosts(request, userId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'GET':
         posts = Post.objects.filter(user=userId)
         return getResponse(PostSerializer, posts, status.HTTP_200_OK, single=False)
 
 @api_view(['DELETE'])
 def deletePost(request, postId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'DELETE':
         try:
             post = Post.objects.get(id=postId)
@@ -120,14 +141,22 @@ def deletePost(request, postId):
 
 @api_view(['POST'])
 def createComment(request):
-    serializer = PostComentSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors)
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
+    if request.method == 'POST':
+        serializer = PostComentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
 
 @api_view(['GET'])
 def getComments(request, postId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'GET':
         count = Comment.objects.filter(post=postId).count()
         if count > 0:
@@ -138,6 +167,9 @@ def getComments(request, postId):
 
 @api_view(['PUT'])
 def putBookmark(request):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'PUT':
         data = request.data
         try:
@@ -152,12 +184,18 @@ def putBookmark(request):
 
 @api_view(['GET'])
 def getUserBookmarks(request, userId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'GET':
         bookmark = Bookmark.objects.filter(user=userId)
         return getResponse(serializer=BookmarksSerializer, model=bookmark, statusCode=status.HTTP_200_OK, single=False)
 
 @api_view(['GET'])
 def getBookmark(request, userId, postId):
+    auth = checkAuthToken(request.headers)
+    if auth:
+        return auth
     if request.method == 'GET':
         bookmark = Bookmark.objects.filter(user=userId, post=postId)
         return getResponse(serializer=BookmarkSerializer, model=bookmark, statusCode=status.HTTP_200_OK, single=True)

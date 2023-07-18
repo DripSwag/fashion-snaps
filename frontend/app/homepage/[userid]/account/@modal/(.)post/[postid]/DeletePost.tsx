@@ -1,5 +1,7 @@
 "use client";
 
+import { getSessionidClient } from "@/scripts/getSessionId";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 export default function DeletePost({ postId }: { postId: string }) {
@@ -12,6 +14,9 @@ export default function DeletePost({ postId }: { postId: string }) {
         postId,
       {
         method: "DELETE",
+        headers: {
+          sessionId: getSessionidClient(Cookies.get("sessionId")),
+        },
       }
     );
     if (response.status === 200) {

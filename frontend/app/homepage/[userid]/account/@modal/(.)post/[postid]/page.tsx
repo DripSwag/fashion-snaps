@@ -1,5 +1,7 @@
 import DeletePost from "./DeletePost";
 import BackButton from "../../BackButton";
+import {getSessionIdServer} from "@/scripts/getSessionId";
+import {cookies} from "next/dist/client/components/headers";
 
 interface post {
   id: number;
@@ -13,7 +15,13 @@ async function getImage(postId: string) {
     const post: post = await fetch(
       process.env.NEXT_PUBLIC_URL_ORIGIN +
         "/api/images?endpoint=post/get/" +
-        postId
+        postId,
+      {
+        headers: {
+          sessionId: getSessionIdServer(cookies())
+        }
+      }
+
     ).then((response) => response.json());
     return post["image"];
   } catch {

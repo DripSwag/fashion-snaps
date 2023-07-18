@@ -1,5 +1,6 @@
 "use client";
 
+import { getSessionidClient } from "@/scripts/getSessionId";
 import Cookies from "js-cookie";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { useRouter } from "next/navigation";
@@ -40,6 +41,7 @@ async function clicked(
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          sessionId: bodyLogin["token"][0]["tokenId"],
         },
         body: JSON.stringify({ user: bodyLogin.id }),
       }

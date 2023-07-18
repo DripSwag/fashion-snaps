@@ -1,5 +1,7 @@
 "use client";
 
+import { getSessionidClient } from "@/scripts/getSessionId";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
 export default function Bookmark({
@@ -18,6 +20,7 @@ export default function Bookmark({
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          sessionId: getSessionidClient(Cookies.get("sessionId")),
         },
         body: JSON.stringify({
           user: userId,
@@ -39,7 +42,12 @@ export default function Bookmark({
         "/api/bookmark?endpoint=bookmark/" +
         userId +
         "/" +
-        postId
+        postId,
+      {
+        headers: {
+          sessionId: getSessionidClient(Cookies.get("sessionId")),
+        },
+      }
     );
     if (response.status === 204) {
       setClicked(false);

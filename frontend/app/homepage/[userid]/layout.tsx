@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Logout from "./Logout";
+import { getSessionIdServer } from "@/scripts/getSessionId";
+import { cookies } from "next/dist/client/components/headers";
 
 interface post {
   id: number | null;
@@ -14,6 +16,7 @@ async function getHomepageUrl(userId: string) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        sessionId: getSessionIdServer(cookies()),
       },
       body: JSON.stringify({ user: parseInt(userId) }),
     }

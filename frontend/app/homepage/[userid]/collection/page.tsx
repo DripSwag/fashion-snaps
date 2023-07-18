@@ -1,3 +1,5 @@
+import {getSessionIdServer} from "@/scripts/getSessionId";
+import {cookies} from "next/dist/client/components/headers";
 import Post from "./Post";
 
 interface bookmark {
@@ -14,6 +16,9 @@ async function getBookmarks(userid: string) {
     process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=bookmark/" + userid,
     {
       cache: "no-store",
+      headers: {
+        sessionId: getSessionIdServer(cookies())
+      }
     }
   );
   if (response.status === 200) {

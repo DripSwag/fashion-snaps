@@ -1,5 +1,8 @@
 "use client";
 
+import { getSessionidClient } from "@/scripts/getSessionId";
+import Cookies from "js-cookie";
+
 interface post {
   id: number | null;
 }
@@ -16,6 +19,9 @@ export default function PostHistroyClear({ userId }: { userId: string }) {
         userId,
       {
         method: "DELETE",
+        headers: {
+          sessionId: getSessionidClient(Cookies.get("sessionId")),
+        },
       }
     );
     if (response.status === 200) {
@@ -25,6 +31,7 @@ export default function PostHistroyClear({ userId }: { userId: string }) {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            sessionId: getSessionidClient(Cookies.get("sessionId")),
           },
           body: JSON.stringify({ user: parseInt(userId) }),
         }

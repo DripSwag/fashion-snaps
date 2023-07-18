@@ -1,3 +1,6 @@
+import {getSessionIdServer} from "@/scripts/getSessionId";
+import {cookies} from "next/dist/client/components/headers";
+
 interface comment {
   id: number;
   comment: string;
@@ -16,6 +19,9 @@ async function getComment(postId: string) {
     process.env.NEXT_PUBLIC_URL_ORIGIN + "/api?endpoint=comment/get/" + postId,
     {
       cache: "no-store",
+      headers: {
+        sessionId: getSessionIdServer(cookies())
+      }
     }
   );
   if (response.status === 200) {

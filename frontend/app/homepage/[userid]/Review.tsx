@@ -10,6 +10,8 @@ import {
   SetStateAction,
   useState,
 } from "react";
+import Cookies from "js-cookie";
+import { getSessionidClient } from "@/scripts/getSessionId";
 
 interface params {
   userId: string;
@@ -29,6 +31,7 @@ export default function Review({ userId, postId }: params) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            sessionId: getSessionidClient(Cookies.get("sessionId")),
           },
           body: JSON.stringify({
             user: userId,
