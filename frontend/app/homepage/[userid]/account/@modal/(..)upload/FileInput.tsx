@@ -1,6 +1,6 @@
 "use client";
 
-import {getSessionidClient} from "@/scripts/getSessionId";
+import { getSessionidClient } from "@/scripts/getSessionId";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
@@ -32,7 +32,7 @@ export default function FileInput({ userId }: { userId: string }) {
         {
           method: "POST",
           headers: {
-            sessionId: getSessionidClient(Cookies.get('sessionId'))
+            sessionId: getSessionidClient(Cookies.get("sessionId")),
           },
           body: formData,
         }
@@ -52,9 +52,9 @@ export default function FileInput({ userId }: { userId: string }) {
       <img
         src={preview}
         alt=" "
-        className="h-full aspect-auto max-w-[600px] border-0"
+        className="h-full w-1/2 aspect-auto max-w-[600px] border-0"
       ></img>
-      <div className="flex py-4 py-2 px-4 border-2 rounded-lg">
+      <div className="flex py-4 py-2 px-4 border-2 rounded-lg my-2">
         <input
           type="file"
           onChange={changeHandler}
