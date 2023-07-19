@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 const API_ORIGIN: string = process.env.API_ORIGIN ? process.env.API_ORIGIN : "";
 
 export async function POST(request: Request) {
