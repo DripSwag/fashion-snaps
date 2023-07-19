@@ -6,5 +6,4 @@ sqlparse
 djangorestframework
 django-cors-headers
 Pillow
-guicorn
 
