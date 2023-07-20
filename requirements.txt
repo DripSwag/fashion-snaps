@@ -6,4 +6,5 @@ sqlparse
 djangorestframework
 django-cors-headers
 Pillow
+whitenoise
 
