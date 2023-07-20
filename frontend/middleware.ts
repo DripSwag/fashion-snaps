@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/homepage")) {
     const response = await fetch(
       process.env.API_ORIGIN +
-        "authorization/" +
+        "/api/authorization/" +
         request.cookies.get("sessionId")?.value
     );
     console.log(response.status);

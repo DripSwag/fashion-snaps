@@ -53,7 +53,7 @@ export default async function Homepage({
           <Review userId={params["userid"]} postId={searchParams["postId"]} />
           <div className="h-3/4 absolute top-1/2 -translate-y-1/2 w-max left-1/2 -translate-x-1/2">
             <img
-              src={"http://127.0.0.1:8000" + post["image"]}
+              src={process.env.API_ORIGIN + post["image"]}
               className="h-full relative left-1/2 -translate-x-1/2"
             ></img>
             <Comment postId={searchParams["postId"]} post={post} />

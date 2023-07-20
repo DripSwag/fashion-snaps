@@ -1,7 +1,7 @@
 import DeletePost from "./DeletePost";
 import BackButton from "../../BackButton";
-import {getSessionIdServer} from "@/scripts/getSessionId";
-import {cookies} from "next/dist/client/components/headers";
+import { getSessionIdServer } from "@/scripts/getSessionId";
+import { cookies } from "next/dist/client/components/headers";
 
 interface post {
   id: number;
@@ -18,10 +18,9 @@ async function getImage(postId: string) {
         postId,
       {
         headers: {
-          sessionId: getSessionIdServer(cookies())
-        }
+          sessionId: getSessionIdServer(cookies()),
+        },
       }
-
     ).then((response) => response.json());
     return post["image"];
   } catch {
@@ -30,7 +29,7 @@ async function getImage(postId: string) {
 }
 
 export default async function Post({ params }: { params: { postid: string } }) {
-  const image = await getImage(params["postid"]);
+  const image = process.env.API_ORIGIN + (await getImage(params["postid"]));
 
   return (
     <div className="w-screen h-screen bg-[#61616199] fixed top-0 left-0">

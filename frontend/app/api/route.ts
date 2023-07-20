@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  const response = await fetch(API_ORIGIN + endpoint, {
+  const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     headers: {
       AuthToken: authToken !== null ? authToken : "",
     },
@@ -21,8 +21,8 @@ export async function POST(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  console.log(API_ORIGIN + endpoint)
-  const response = await fetch(API_ORIGIN + endpoint, {
+  console.log(API_ORIGIN + endpoint);
+  const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export async function PUT(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  const response = await fetch(API_ORIGIN + endpoint, {
+  const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export async function DELETE(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  const response = await fetch(API_ORIGIN + endpoint, {
+  const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     method: "DELETE",
     headers: {
       AuthToken: authToken !== null ? authToken : "",

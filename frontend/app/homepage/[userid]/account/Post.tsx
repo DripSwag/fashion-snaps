@@ -7,7 +7,7 @@ export default function Post({ img, id }: { img: string; id: number }) {
 
   function clicked() {
     router.push(
-      "http://localhost:3000/homepage/1/account/post/" + id.toString()
+      process.env.NEXT_PUBLIC_URL_ORIGIN + "/homepage/1/account/post/" + id.toString()
     );
   }
 

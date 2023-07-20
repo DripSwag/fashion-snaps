@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  const response = await fetch(API_ORIGIN + endpoint, {
+  const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     headers: {
       AuthToken: authToken !== null ? authToken : "",
     },
