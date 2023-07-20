@@ -18,6 +18,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  console.log(API_ORIGIN)
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
