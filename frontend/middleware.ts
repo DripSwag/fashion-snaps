@@ -4,7 +4,8 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/homepage")) {
     const response = await fetch(
-      "http://127.0.0.1:8000/api/authorization/" +
+      process.env.API_ORIGIN +
+        "authorization/" +
         request.cookies.get("sessionId")?.value
     );
     console.log(response.status);
