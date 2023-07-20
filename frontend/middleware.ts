@@ -7,6 +7,7 @@ export async function middleware(request: NextRequest) {
       "http://127.0.0.1:8000/api/authorization/" +
         request.cookies.get("sessionId")?.value
     );
+    console.log(response.status);
     if (response.status !== 202) {
       return NextResponse.redirect(new URL("/", request.url));
     }
