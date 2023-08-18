@@ -64,9 +64,11 @@ def getRandomPost(request):
         return auth
     if request.method == 'PUT':
         queue = UserPostQueue.objects.filter(user=request.data['user'])
+        print(queue)
         if queue.count() == 1:
             post = queue[0].getRandomPost()
             serializer = PostSerializer(post, many=False)
+            print(serializer.data)
             return Response(serializer.data)
         else:
             serializer = UserPostQueueSerializer(data=request.data)
@@ -75,6 +77,7 @@ def getRandomPost(request):
                 queue = UserPostQueue.objects.filter(user=request.data['user'])
                 post = queue[0].getRandomPost()
                 serializer = PostSerializer(post, many=False)
+                print(serializer.data)
                 return Response(serializer.data)
 
 @api_view(['POST'])
