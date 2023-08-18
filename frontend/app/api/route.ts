@@ -48,6 +48,7 @@ export async function PUT(request: Request) {
     },
     body: JSON.stringify(await request.json()),
   });
+  console.log(response.url);
   if (response.status === 401) {
     return NextResponse.redirect("http://localhost:3000" || "");
   }
