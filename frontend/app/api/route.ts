@@ -40,6 +40,7 @@ export async function PUT(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
+  console.log(API_ORIGIN + "/api/" + endpoint);
   const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     method: "PUT",
     headers: {
