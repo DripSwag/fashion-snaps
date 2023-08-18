@@ -21,7 +21,6 @@ export async function POST(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  console.log(API_ORIGIN + endpoint);
   const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     method: "POST",
     headers: {
@@ -40,7 +39,6 @@ export async function PUT(request: Request) {
   const authToken = request.headers.get("sessionId");
   const { searchParams } = new URL(request.url);
   const endpoint = searchParams.get("endpoint");
-  console.log(API_ORIGIN + "/api/" + endpoint);
   const response = await fetch(API_ORIGIN + "/api/" + endpoint, {
     method: "PUT",
     headers: {
@@ -49,7 +47,6 @@ export async function PUT(request: Request) {
     },
     body: JSON.stringify(await request.json()),
   });
-  console.log(response.url);
   if (response.status === 401) {
     return NextResponse.redirect("http://localhost:3000" || "");
   }
