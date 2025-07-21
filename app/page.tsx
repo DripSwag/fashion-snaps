@@ -1,25 +1,22 @@
-import { createClient } from "@/utils/supabase/server";
-import Link from "next/link";
 import { getPosts } from "./actions";
 import Post from "@/components/Post";
 
 export default async function Home() {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.getUser();
-
   const posts = await getPosts();
 
+  console.log(posts);
+
   return (
-    <main>
-      <h1>Test</h1>
-      {error === null ? (
-        <Link href="/post">Post</Link>
-      ) : (
-        <Link href="/login">Login</Link>
-      )}
+    <main className="min-h-screen">
       {posts?.map((value) => {
-        return <Post src={value.signedUrl} key={value.id} />;
+        return (
+          <Post
+            src={value.signedUrl}
+            key={value.id}
+            id={value.id}
+            bgColor={value.bgColor}
+          />
+        );
       })}
     </main>
   );

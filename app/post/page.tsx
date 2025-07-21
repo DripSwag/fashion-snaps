@@ -6,6 +6,7 @@ export default function Post() {
       <h1>Post</h1>
       <form action={submit}>
         <input type="file" name="image" />
+        <input type="color" name="color" />
         <input type="submit" />
       </form>
     </main>

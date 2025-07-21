@@ -9,6 +9,8 @@ export async function getPosts() {
 
   const posts = await supabase.from("Post").select(`*`);
 
+  console.log(posts);
+
   if (posts.error !== null) {
     return [];
   }
@@ -29,6 +31,7 @@ export async function getPosts() {
     combinedData.push({
       signedUrl: signedUrls.data[i].signedUrl,
       id: posts.data[i].id,
+      bgColor: posts.data[i].color,
     });
   }
 

@@ -9,7 +9,7 @@ export async function submit(formData: FormData) {
 
   const postData = await supabase
     .from("Post")
-    .insert({ user: userData.data.user?.id })
+    .insert({ user: userData.data.user?.id, color: formData.get("color") })
     .select();
 
   const imageFile = formData.get("image") as File;
