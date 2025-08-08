@@ -8,8 +8,6 @@ export async function getPosts() {
 
   const posts = await supabase.from("Post").select(`*`);
 
-  console.log(posts);
-
   if (posts.error !== null) {
     return [];
   }
@@ -39,8 +37,6 @@ export async function getPosts() {
 
 export default async function Home() {
   const posts = await getPosts();
-
-  console.log(posts);
 
   return (
     <main className="min-h-screen">
