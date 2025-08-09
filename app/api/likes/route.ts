@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
     .eq("user_id", body.user_id)
     .eq("post_id", body.post_id);
 
-  console.log(selectData.data);
-
   if (selectData.data?.length !== 0) {
     await supabase
       .from("Like")
