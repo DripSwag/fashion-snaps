@@ -4,6 +4,11 @@ import { Geist, Geist_Mono, Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import { createClient } from "@/utils/supabase/server";
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

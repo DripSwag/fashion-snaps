@@ -3,6 +3,11 @@ import { createClient } from "@/utils/supabase/server";
 import { SupabaseClient } from "@supabase/supabase-js";
 import LikeSection from "@/components/p/[postID]/LikeSection";
 
+// @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
+// Remove this opt-out after verifying the segment passes validation without it.
+// See: https://nextjs.org/docs/app/guides/migrating-to-cache-components
+export const instant = false;
+
 export async function getPost(
   supabase: SupabaseClient<any, "public", any>,
   id: number,
