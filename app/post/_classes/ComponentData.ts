@@ -1,14 +1,24 @@
-export abstract class Component {
+export abstract class ComponentData {
   private width: number;
   private height: number;
   private x: number;
   private y: number;
+  private z: number;
 
-  constructor(width: number, height: number, x: number, y: number) {
+  constructor(width: number, height: number, x: number, y: number, z = 0) {
     this.width = width;
     this.height = height;
     this.x = x;
     this.y = y;
+    this.z = z;
+  }
+
+  getZ() {
+    return this.z;
+  }
+
+  setZ(z: number) {
+    this.z = z;
   }
 
   setX(x: number) {
@@ -17,6 +27,14 @@ export abstract class Component {
 
   setY(y: number) {
     this.y = y;
+  }
+
+  setHeight(height: number) {
+    this.height = height;
+  }
+
+  setWidth(width: number) {
+    this.width = width;
   }
 
   getX() {

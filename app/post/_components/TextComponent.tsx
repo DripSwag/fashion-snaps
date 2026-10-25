@@ -1,12 +1,12 @@
-import Draggable, { DraggableData } from "react-draggable";
-import { useRef } from "react";
 import { Text } from "../_classes/Text";
-import { EditComponent } from "../_types/EditComponent";
+import { ComponentParams } from "../_interfaces/componentParams";
+import Component from "./Component";
+import { ChangeEvent } from "react";
+import { SetEditingComponent } from "../_types/SetEditingComponent";
 
-interface Params {
+interface Params extends ComponentParams<Text> {
   value: Text;
-  updateComponent: (editComponent: EditComponent) => void;
-  removeComponent: () => void;
+  setEditingComponent: SetEditingComponent;
 }
 
 export const instant = false;
@@ -15,38 +15,32 @@ export default function TextComponent({
   value,
   updateComponent,
   removeComponent,
+  setEditingComponent,
 }: Params) {
-  const nodeRef = useRef(null);
-
-  function handleOnStop(_: Event, data: DraggableData) {
-    if (data.x < 0 || data.y < 0 || data.x > 400 || data.y > 650) {
-      removeComponent();
-    }
-  }
-
-  function handleDrag(_: Event, data: DraggableData): void {
-    updateComponent((component) => {
-      component.setX(data.x);
-      component.setY(data.y);
+  function handleChange(
+    event: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>,
+  ) {
+    updateComponent((component: Text) => {
+      component.setValue(event.currentTarget.value);
     });
   }
 
   return (
-    <Draggable
-      nodeRef={nodeRef}
-      onDrag={handleDrag}
-      onStop={handleOnStop}
-      defaultPosition={{ x: 0, y: 0 }}
+    <Component
+      setEditingComponent={setEditingComponent}
+      componentData={value}
+      updateComponent={updateComponent}
+      removeComponent={removeComponent}
     >
-      <input
-        ref={nodeRef}
-        value={value.getValue()}
-        onChange={(event) => {
-          updateComponent((component: Text) => {
-            component.setValue(event.currentTarget.value);
-          });
+      <textarea
+        className="w-full h-full resize-none border-none outline-none text-nowrap overflow-hidden"
+        style={{
+          fontSize: value.getSize(),
+          fontFamily: value.getFont(),
         }}
+        value={value.getValue()}
+        onChange={handleChange}
       />
-    </Draggable>
+    </Component>
   );
 }

@@ -1,3 +1,1 @@
-import { ComponentVariants } from "./ComponentVariants";
-
-export type EditComponent = (component: ComponentVariants) => void;
+export type EditComponent<T> = (component: T) => void;

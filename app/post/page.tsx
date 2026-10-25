@@ -6,15 +6,24 @@ import { Text } from "./_classes/Text";
 import { EditComponent } from "./_types/EditComponent";
 import { ComponentVariants } from "./_types/ComponentVariants";
 import Sidebar from "./_ui/Sidebar";
+import { ImageData } from "./_classes/ImageData";
+import ImageComponent from "./_components/ImageComponent";
+import { ShapeData } from "./_classes/ShapeData";
+import ShapeComponent from "./_components/ShapeComponent";
+import Toolbar from "./_components/Toolbar";
+import { UpdateComponent } from "./_types/UpdateComponent";
 
 export default function Post() {
   const [components, setComponents] = useState<ComponentVariants[]>([]);
   const [pageColor, setPageColor] = useState("#ffffff");
   const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+  const [editingComponent, setEditingComponent] = useState<
+    undefined | ComponentVariants
+  >(undefined);
 
-  function updateComponent(
-    component: ComponentVariants,
-    editComponent: EditComponent,
+  function updateComponent<T extends ComponentVariants>(
+    component: T,
+    editComponent: EditComponent<T>,
   ) {
     let newComponents = generateAddedComponent(
       components,
@@ -25,19 +34,54 @@ export default function Post() {
     setComponents(newComponents);
   }
 
-  function createComponent(component: Text, index: number) {
-    return (
-      <TextComponent
-        key={index}
-        value={component}
-        updateComponent={(editComponent: EditComponent) => {
-          updateComponent(component, editComponent);
-        }}
-        removeComponent={() => {
-          removeComponent(component);
-        }}
-      />
-    );
+  function setEditingComponentWrapper(component: ComponentVariants) {
+    setEditingComponent(component);
+  }
+
+  function createComponent(component: ComponentVariants, index: number) {
+    if (component instanceof Text) {
+      return (
+        <TextComponent
+          key={index}
+          setEditingComponent={setEditingComponentWrapper}
+          value={component}
+          updateComponent={(editComponent: EditComponent<Text>) => {
+            updateComponent(component, editComponent);
+          }}
+          removeComponent={() => {
+            removeComponent(component);
+          }}
+        />
+      );
+    } else if (component instanceof ImageData) {
+      return (
+        <ImageComponent
+          key={index}
+          setEditingComponent={setEditingComponentWrapper}
+          value={component}
+          updateComponent={(editComponent: EditComponent<ImageData>) => {
+            updateComponent(component, editComponent);
+          }}
+          removeComponent={() => {
+            removeComponent(component);
+          }}
+        />
+      );
+    } else if (component instanceof ShapeData) {
+      return (
+        <ShapeComponent
+          key={index}
+          setEditingComponent={setEditingComponentWrapper}
+          value={component}
+          updateComponent={(editComponent: EditComponent<ShapeData>) => {
+            updateComponent(component, editComponent);
+          }}
+          removeComponent={() => {
+            removeComponent(component);
+          }}
+        />
+      );
+    }
   }
 
   function addComponent(component: ComponentVariants) {
@@ -56,26 +100,33 @@ export default function Post() {
         setBackgroundColor={setBackgroundColor}
         setPageColor={setPageColor}
       />
-      <div
-        className="w-[400px] h-[650px] overflow-hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 shadow-2xl"
-        style={{ backgroundColor: pageColor }}
-      >
+      <div className="page" style={{ backgroundColor: pageColor }}>
         {components.map((component, index) =>
           createComponent(component, index),
         )}
       </div>
+      {editingComponent && (
+        <Toolbar
+          editingComponent={editingComponent}
+          updateComponent={(
+            editComponent: EditComponent<ComponentVariants>,
+          ) => {
+            updateComponent(editingComponent, editComponent);
+          }}
+        />
+      )}
     </main>
   );
 }
 
-function generateAddedComponent(
+function generateAddedComponent<T extends ComponentVariants>(
   components: ComponentVariants[],
-  component: ComponentVariants,
-  editComponent: EditComponent,
+  component: T,
+  editComponent: EditComponent<T>,
 ) {
   var newComponents = [];
   for (var cur of components) {
-    if (cur == component) {
+    if (cur === component) {
       editComponent(component);
     }
     newComponents.push(cur);

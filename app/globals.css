@@ -1,1 +1,145 @@
+@import "react-resizable/css/styles.css";
 @import "tailwindcss";
+
+.ontop {
+  transform: translateZ(9999999px);
+}
+
+.triangle {
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transform: rotate(0deg);
+}
+
+.resizable-box {
+  width: calc(100% + 50px);
+  height: calc(100% + 50px);
+}
+
+.handle {
+  position: absolute;
+  width: 8px;
+  aspect-ratio: 1;
+  background-color: green;
+}
+
+.handle-w,
+.handle-e {
+  top: 50%;
+  transform: translate(0, -4px);
+}
+
+.handle-s,
+.handle-sw,
+.handle-se {
+  bottom: -28px;
+}
+
+.handle-n,
+.handle-nw,
+.handle-ne {
+  top: -28px;
+}
+
+.handle-n,
+.handle-s {
+  left: 50%;
+  transform: translate(-4px, 0);
+}
+
+.handle-nw,
+.handle-sw,
+.handle-w {
+  left: -24px;
+  transform: translate(-4px, 0);
+}
+
+.handle-ne,
+.handle-se,
+.handle-e {
+  right: -24px;
+  transform: translate(4px, 0);
+}
+
+.page {
+  --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
+  height: 650px;
+  width: 400px;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  box-shadow:
+    var(--tw-inset-shadow), var(--tw-inset-ring-shadow),
+    var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+@property --tw-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-inset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-inset-ring-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-inset-ring-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}
+@property --tw-ring-inset {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-ring-offset-width {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --tw-ring-offset-color {
+  syntax: "*";
+  inherits: false;
+  initial-value: #fff;
+}
+@property --tw-ring-offset-shadow {
+  syntax: "*";
+  inherits: false;
+  initial-value: 0 0 #0000;
+}

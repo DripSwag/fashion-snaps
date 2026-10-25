@@ -3,8 +3,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { postText, createPost } from "./_lib/db";
-import { isText } from "./_lib/discriminator";
+import { postText, createPost, postImage, postShape } from "./_lib/db";
+import { isImage, isShape, isText } from "./_lib/discriminator";
 
 export async function submit(components: Object[]) {
   const supabase = await createClient();
@@ -13,18 +13,23 @@ export async function submit(components: Object[]) {
   try {
     const userData = await auth(supabase);
 
-    const postID = await createPost(userData, supabase);
+    const postResult = await createPost(userData, supabase);
 
-    if (postID.data === null) {
+    if (postResult.data === null) {
       throw new Error();
     }
 
     const promises = [];
+    const postID = postResult.data[0].id;
 
     for (var component of components) {
       var promise;
       if (isText(component)) {
-        promise = postText(component, postID.data[0].id, supabase);
+        promise = postText(component, postID, supabase);
+      } else if (isImage(component)) {
+        promise = postImage(component, postID, supabase);
+      } else if (isShape(component)) {
+        promise = postShape(component, supabase, postID);
       }
       promises.push(promise);
     }

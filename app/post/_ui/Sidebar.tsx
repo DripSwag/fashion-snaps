@@ -1,7 +1,10 @@
 import { ComponentVariants } from "../_types/ComponentVariants";
 import { Text } from "../_classes/Text";
 import { submit } from "../actions";
-import { Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ImageData } from "../_classes/ImageData";
+import { ShapeData } from "../_classes/ShapeData";
+import { ShapeType } from "../_enum/ShapeType";
 
 interface Params {
   addComponent: (component: ComponentVariants) => void;
@@ -16,14 +19,42 @@ export default function Sidebar({
   setPageColor,
   setBackgroundColor,
 }: Params) {
+  function addImage(event: ChangeEvent<HTMLInputElement, HTMLInputElement>) {
+    if (event.target.files !== null && event.target.files.item(0) !== null) {
+      addComponent(new ImageData(event.target.files.item(0)));
+    }
+  }
+
   return (
-    <div className="absolute top-1/2 -translate-y-1/2">
+    <div className="absolute top-1/2 -translate-y-1/2 flex flex-col">
+      <input type="file" onChange={addImage} />
       <button
         onClick={() => {
           addComponent(new Text());
         }}
       >
         Create Text
+      </button>
+      <button
+        onClick={() => {
+          addComponent(new ShapeData());
+        }}
+      >
+        Create Square
+      </button>
+      <button
+        onClick={() => {
+          addComponent(new ShapeData(ShapeType.Circle));
+        }}
+      >
+        Create Circle
+      </button>
+      <button
+        onClick={() => {
+          addComponent(new ShapeData(ShapeType.Triangle));
+        }}
+      >
+        Create Triangle
       </button>
       <input
         type="color"
