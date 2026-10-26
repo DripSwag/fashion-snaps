@@ -3,10 +3,14 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { postText, createPost, postImage, postShape } from "./_lib/db";
-import { isImage, isShape, isText } from "./_lib/discriminator";
+import { createPost } from "./_lib/db";
+import { isImage } from "./_lib/discriminator";
 
-export async function submit(components: Object[]) {
+export async function submit(
+  components: Object[],
+  backgroundColor: string,
+  pageColor: string,
+) {
   const supabase = await createClient();
   var redirectPath = null;
 
@@ -16,25 +20,39 @@ export async function submit(components: Object[]) {
     const postResult = await createPost(userData, supabase);
 
     if (postResult.data === null) {
-      throw new Error();
+      throw postResult.error;
     }
 
-    const promises = [];
     const postID = postResult.data[0].id;
 
-    for (var component of components) {
-      var promise;
-      if (isText(component)) {
-        promise = postText(component, postID, supabase);
-      } else if (isImage(component)) {
-        promise = postImage(component, postID, supabase);
-      } else if (isShape(component)) {
-        promise = postShape(component, supabase, postID);
-      }
-      promises.push(promise);
-    }
+    // Upload images first, replacing the File with its storage path
+    const serialized = await Promise.all(
+      components.map(async (component) => {
+        if (!isImage(component)) return component;
 
-    Promise.all(promises);
+        const { image, ...rest } = component.body;
+        const path = `${postID}/${crypto.randomUUID()}-${image.name}`;
+
+        const { error } = await supabase.storage
+          .from("PostImage")
+          .upload(path, image);
+        if (error) throw error;
+
+        return {
+          component: "image",
+          body: { ...rest, imagePath: path },
+        };
+      }),
+    );
+
+    const { error } = await supabase.storage
+      .from("PostData")
+      .upload(
+        `${postID}/data.json`,
+        JSON.stringify({ components: serialized, backgroundColor, pageColor }),
+        { contentType: "application/json", upsert: true },
+      );
+    if (error) throw error;
 
     redirectPath = "/";
   } catch (e: any) {

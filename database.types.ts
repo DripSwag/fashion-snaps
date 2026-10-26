@@ -1,3 +1,6 @@
+Need to install the following packages:
+supabase@2.122.0
+Ok to proceed? (y) 
 export type Json =
   | string
   | number
@@ -10,7 +13,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
@@ -44,7 +47,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "Component_post_fkey"
+            foreignKeyName: "Component_post_fkey1"
             columns: ["post"]
             isOneToOne: false
             referencedRelation: "Post"
@@ -110,24 +113,18 @@ export type Database = {
       }
       Post: {
         Row: {
-          background_color: string
           created_at: string
           id: number
-          page_color: string
           user: string | null
         }
         Insert: {
-          background_color?: string
           created_at?: string
           id?: number
-          page_color?: string
           user?: string | null
         }
         Update: {
-          background_color?: string
           created_at?: string
           id?: number
-          page_color?: string
           user?: string | null
         }
         Relationships: []

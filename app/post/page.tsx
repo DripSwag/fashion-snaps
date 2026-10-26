@@ -11,7 +11,6 @@ import ImageComponent from "./_components/ImageComponent";
 import { ShapeData } from "./_classes/ShapeData";
 import ShapeComponent from "./_components/ShapeComponent";
 import Toolbar from "./_components/Toolbar";
-import { UpdateComponent } from "./_types/UpdateComponent";
 
 export default function Post() {
   const [components, setComponents] = useState<ComponentVariants[]>([]);
@@ -99,6 +98,8 @@ export default function Post() {
         components={components}
         setBackgroundColor={setBackgroundColor}
         setPageColor={setPageColor}
+        pageColor={pageColor}
+        backgroundColor={backgroundColor}
       />
       <div className="page" style={{ backgroundColor: pageColor }}>
         {components.map((component, index) =>

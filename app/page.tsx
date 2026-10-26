@@ -1,6 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { getPosts } from "./_lib/post";
-import { QueryData, SupabaseClient } from "@supabase/supabase-js";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { StoredComponent } from "./_lib/post";
+import { Database } from "@/database.types";
+import { ShapeType } from "./post/_enum/ShapeType";
 
 // @next-codemod-ignore Cache Components adoption: this segment temporarily allows blocking.
 // Remove this opt-out after verifying the segment passes validation without it.
@@ -10,92 +13,81 @@ export const instant = false;
 export default async function Home() {
   const supabase = await createClient();
 
-  const postsResponse = getPosts(supabase);
-
-  const { data, error } = await postsResponse;
-
-  if (error) {
-    throw error;
-  }
+  const posts = await getPosts(supabase);
 
   return (
     <main>
-      {data.map((value) => (
-        <section className="w-screen h-screen" key={value.id}>
-          <div className="page">
-            {value.ImageComponent.map((imageValue) => (
-              <ImageComponent
-                key={imageValue.id}
-                supabase={supabase}
-                //@ts-ignore NOTE: Supabase types are incorrect
-                filePath={imageValue.objects["name"]}
-                width={imageValue.width}
-                height={imageValue.height}
-                x={imageValue.x}
-                y={imageValue.y}
-              />
-            ))}
-            {value.TextComponent.map((textValue) => (
-              <TextComponent
-                value={textValue.value}
-                key={textValue.id}
-                width={textValue.width}
-                height={textValue.height}
-                x={textValue.x}
-                y={textValue.y}
-              />
-            ))}
-          </div>
-        </section>
-      ))}
+      {posts &&
+        posts.map((post) => (
+          <section
+            className="w-screen h-screen"
+            style={{ backgroundColor: post.backgroundColor }}
+            key={post.id}
+          >
+            <div className="page" style={{ backgroundColor: post.pageColor }}>
+              {post.components.map((component, i) => (
+                <RenderComponent
+                  key={i}
+                  component={component}
+                  supabase={supabase}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
     </main>
   );
 }
-
-interface TextInterface {
-  value: string;
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-}
-
-function TextComponent({ value, width, height, x, y }: TextInterface) {
-  return (
-    <p
-      className="whitespace-pre-line absolute"
-      style={{ width, height, left: x, top: y }}
-    >
-      {value}
-    </p>
-  );
-}
-
-interface ImageParameter {
-  filePath: string;
-  supabase: SupabaseClient;
-  height: number;
-  width: number;
-  x: number;
-  y: number;
-}
-
-function ImageComponent({
-  filePath,
+function RenderComponent({
+  component,
   supabase,
-  width,
-  height,
-  x,
-  y,
-}: ImageParameter) {
-  const imageSrc = supabase.storage.from("PostImage").getPublicUrl(filePath);
+}: {
+  component: StoredComponent;
+  supabase: SupabaseClient<Database>;
+}) {
+  const { x, y, z, width, height } = component.body;
+  const style = { width, height, left: x, top: y, zIndex: z };
 
-  return (
-    <img
-      src={imageSrc.data.publicUrl}
-      alt="Image"
-      className="absolute"
-      style={{ width, height, left: x, top: y }}
-    />
-  );
+  switch (component.component) {
+    case "text":
+      return (
+        <p
+          className="whitespace-pre-line absolute"
+          style={{
+            ...style,
+            fontSize: component.body.size,
+            fontFamily: component.body.font,
+          }}
+        >
+          {component.body.value}
+        </p>
+      );
+    case "image": {
+      const { data } = supabase.storage
+        .from("PostImage")
+        .getPublicUrl(component.body.imagePath);
+      return (
+        <img
+          src={data.publicUrl}
+          alt="Image"
+          className="absolute"
+          style={style}
+        />
+      );
+    }
+    case "shape":
+      return (
+        <div
+          className={`absolute ${component.body.type === ShapeType.Circle ? "rounded-full" : ""}`}
+          style={{
+            ...style,
+            backgroundColor: component.body.color,
+            clipPath:
+              component.body.type === ShapeType.Triangle
+                ? "polygon(50% 0%, 0% 100%, 100% 100%)"
+                : undefined,
+          }}
+        />
+      );
+  }
 }
