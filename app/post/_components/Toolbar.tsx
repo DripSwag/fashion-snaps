@@ -25,12 +25,15 @@ export default function Toolbar<T extends ComponentVariants>({
   }
 
   return (
-    <div className="absolute right-0 flex flex-col">
-      <input
-        type="number"
-        value={editingComponent ? editingComponent.getZ() : 0}
-        onChange={handleChange}
-      />
+    <div className="flex flex-col gap-2">
+      <span className="rounded-md flex items-center gap-2">
+        <label className="text-neutral-500">Z-Index</label>
+        <input
+          type="number"
+          value={editingComponent ? editingComponent.getZ() : 0}
+          onChange={handleChange}
+        />
+      </span>
       <CreateToolbar
         editingComponent={editingComponent}
         updateComponent={updateComponent}

@@ -100,24 +100,40 @@ export default function Post() {
         setPageColor={setPageColor}
         pageColor={pageColor}
         backgroundColor={backgroundColor}
+        EditingComponent={generateEditingComponent(
+          editingComponent,
+          updateComponent,
+        )}
       />
       <div className="page" style={{ backgroundColor: pageColor }}>
         {components.map((component, index) =>
           createComponent(component, index),
         )}
       </div>
-      {editingComponent && (
-        <Toolbar
-          editingComponent={editingComponent}
-          updateComponent={(
-            editComponent: EditComponent<ComponentVariants>,
-          ) => {
-            updateComponent(editingComponent, editComponent);
-          }}
-        />
-      )}
     </main>
   );
+}
+
+type UpdateComponent = <T extends ComponentVariants>(
+  component: T,
+  editComponent: EditComponent<T>,
+) => void;
+
+function generateEditingComponent(
+  editingComponent: undefined | ComponentVariants,
+  updateComponent: UpdateComponent,
+) {
+  if (editingComponent) {
+    return (
+      <Toolbar
+        editingComponent={editingComponent}
+        updateComponent={(editComponent: EditComponent<ComponentVariants>) => {
+          updateComponent(editingComponent, editComponent);
+        }}
+      />
+    );
+  }
+  return undefined;
 }
 
 function generateAddedComponent<T extends ComponentVariants>(

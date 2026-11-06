@@ -16,7 +16,15 @@ export default function ShapeToolbar({ color, updateComponent }: Params) {
 
   return (
     <>
-      <input type="color" value={color} onChange={handleChange} />
+      <span className="rounded-md flex items-center gap-2">
+        <label className="text-neutral-500">Fill</label>
+        <input
+          type="color"
+          value={color}
+          onChange={handleChange}
+          className="hover:cursor-pointer"
+        />
+      </span>
     </>
   );
 }

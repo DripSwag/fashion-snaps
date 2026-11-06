@@ -1,7 +1,7 @@
 import { ComponentVariants } from "../_types/ComponentVariants";
 import { Text } from "../_classes/Text";
 import { submit } from "../actions";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useRef } from "react";
 import { ImageData } from "../_classes/ImageData";
 import { ShapeData } from "../_classes/ShapeData";
 import { ShapeType } from "../_enum/ShapeType";
@@ -13,6 +13,7 @@ interface Params {
   setBackgroundColor: Dispatch<SetStateAction<string>>;
   backgroundColor: string;
   pageColor: string;
+  EditingComponent: React.ReactNode | undefined;
 }
 
 export default function Sidebar({
@@ -22,7 +23,10 @@ export default function Sidebar({
   setBackgroundColor,
   backgroundColor,
   pageColor,
+  EditingComponent,
 }: Params) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   function addImage(
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ): void {
@@ -32,9 +36,50 @@ export default function Sidebar({
   }
 
   return (
-    <div className="absolute top-1/2 -translate-y-1/2 flex flex-col">
-      <input type="file" onChange={addImage} />
+    <div className="absolute top-1/2 -translate-y-1/2 flex flex-col gap-2 justify-center p-8 h-full bg-white backdrop-blur-md border-r border-black/10">
+      <span className="flex gap-2 items-center">
+        <input
+          type="color"
+          autoComplete="off"
+          value={pageColor}
+          onChange={(event) => {
+            setPageColor(event.currentTarget.value);
+          }}
+          className="hover:cursor-pointer"
+        />
+        <label>Page Color</label>
+      </span>
+      <span className="flex gap-2 items-center">
+        <input
+          type="color"
+          autoComplete="off"
+          value={backgroundColor}
+          onChange={(event) => {
+            setBackgroundColor(event.currentTarget.value);
+          }}
+          className="hover:cursor-pointer"
+        />
+        <label>Background Color</label>
+      </span>
+      <Divider />
+      <input
+        type="file"
+        onChange={addImage}
+        className="hover:cursor-pointer file:overflow-hidden"
+        hidden
+        ref={inputRef}
+        accept="image/*"
+      />
       <button
+        className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
+        onClick={() => {
+          inputRef.current?.click();
+        }}
+      >
+        Create Image
+      </button>
+      <button
+        className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
         onClick={() => {
           addComponent(new Text());
         }}
@@ -42,6 +87,7 @@ export default function Sidebar({
         Create Text
       </button>
       <button
+        className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
         onClick={() => {
           addComponent(new ShapeData());
         }}
@@ -49,6 +95,7 @@ export default function Sidebar({
         Create Square
       </button>
       <button
+        className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
         onClick={() => {
           addComponent(new ShapeData(ShapeType.Circle));
         }}
@@ -56,28 +103,27 @@ export default function Sidebar({
         Create Circle
       </button>
       <button
+        className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
         onClick={() => {
           addComponent(new ShapeData(ShapeType.Triangle));
         }}
       >
         Create Triangle
       </button>
-      <input
-        type="color"
-        onChange={(event) => {
-          setPageColor(event.currentTarget.value);
-        }}
-      />
-      <input
-        type="color"
-        onChange={(event) => {
-          setBackgroundColor(event.currentTarget.value);
-        }}
-      />
+      <Divider />
+      {EditingComponent ? (
+        <>
+          {EditingComponent}
+          <Divider />
+        </>
+      ) : (
+        <></>
+      )}
       <button
         onClick={async () => {
           await handlePost(components, backgroundColor, pageColor);
         }}
+        className="bg-blue-300 p-2 rounded-full hover:cursor-pointer"
       >
         Post
       </button>
@@ -92,4 +138,8 @@ async function handlePost(
 ) {
   var temp = components.map((cur) => cur.asPayload());
   await submit(temp, backgroundColor, pageColor);
+}
+
+function Divider() {
+  return <div className="w-full h-0.5 bg-neutral-100 rounded-full my-4"></div>;
 }

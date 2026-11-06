@@ -49,7 +49,18 @@ export default function TextToolbar({
 
   return (
     <>
-      <select onChange={handleFontOnChange}>
+      <span className="flex items-center gap-2">
+        <label className="text-neutral-500">Font Size</label>
+        <input
+          ref={sizeRef}
+          defaultValue={componentData.getSize()}
+          onKeyDown={handleKeyDown}
+          onBlur={(event) => {
+            setSize(parseInt(event.currentTarget.value));
+          }}
+        />
+      </span>
+      <select onChange={handleFontOnChange} className="hover:cursor-pointer">
         {fontFaces &&
           fontFaces.map((value) => (
             <option value={value.family} key={value.family}>
@@ -57,14 +68,6 @@ export default function TextToolbar({
             </option>
           ))}
       </select>
-      <input
-        ref={sizeRef}
-        defaultValue={componentData.getSize()}
-        onKeyDown={handleKeyDown}
-        onBlur={(event) => {
-          setSize(parseInt(event.currentTarget.value));
-        }}
-      />
     </>
   );
 }
