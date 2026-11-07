@@ -76,7 +76,7 @@ export default function Sidebar({
           inputRef.current?.click();
         }}
       >
-        Create Image
+        Add Image
       </button>
       <button
         className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
@@ -84,7 +84,7 @@ export default function Sidebar({
           addComponent(new Text());
         }}
       >
-        Create Text
+        Add Text
       </button>
       <button
         className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
@@ -92,7 +92,7 @@ export default function Sidebar({
           addComponent(new ShapeData());
         }}
       >
-        Create Square
+        Add Square
       </button>
       <button
         className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
@@ -100,7 +100,7 @@ export default function Sidebar({
           addComponent(new ShapeData(ShapeType.Circle));
         }}
       >
-        Create Circle
+        Add Circle
       </button>
       <button
         className="border-2 border-blue-300 rounded-full hover:cursor-pointer"
@@ -108,7 +108,7 @@ export default function Sidebar({
           addComponent(new ShapeData(ShapeType.Triangle));
         }}
       >
-        Create Triangle
+        Add Triangle
       </button>
       <Divider />
       {EditingComponent ? (
