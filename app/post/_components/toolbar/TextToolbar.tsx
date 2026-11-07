@@ -72,14 +72,21 @@ export default function TextToolbar({
   );
 }
 
-function createFontFaces(data: any): FontFace[] {
+interface GoogleFont {
+  family: string;
+  files: {
+    regular: string;
+  };
+}
+
+interface GoogleFonts {
+  items: GoogleFont[];
+}
+
+function createFontFaces(data: GoogleFonts): FontFace[] {
   if (data !== undefined) {
     return data.items.map((font) => {
-      return new FontFace(
-        font.family,
-        `url(${font.files.regular})`,
-        font.options,
-      );
+      return new FontFace(font.family, `url(${font.files.regular})`, undefined);
     });
   }
   return [];
