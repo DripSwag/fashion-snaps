@@ -1,15 +1,6 @@
 import Draggable, { DraggableData } from "react-draggable";
 import ResizeBox from "./ResizeBox";
-import {
-  ReactNode,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from "react";
-import { ComponentData } from "../_classes/ComponentData";
+import { ReactNode, SyntheticEvent, useEffect, useRef, useState } from "react";
 import { ComponentParams } from "../_interfaces/componentParams";
 import { ComponentVariants } from "../_types/ComponentVariants";
 import {

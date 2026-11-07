@@ -1,6 +1,5 @@
 import { ShapeData } from "../_classes/ShapeData";
 import { ComponentVariants } from "../_types/ComponentVariants";
-import { EditComponent } from "../_types/EditComponent";
 import ShapeToolbar from "./toolbar/ShapeToolbar";
 import { UpdateComponent } from "../_types/UpdateComponent";
 import { Text } from "../_classes/Text";

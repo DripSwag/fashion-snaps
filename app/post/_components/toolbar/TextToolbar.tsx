@@ -3,7 +3,7 @@
 import useSWR from "swr";
 import { Text } from "../../_classes/Text";
 import { UpdateComponent } from "../../_types/UpdateComponent";
-import { ChangeEvent, KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useRef } from "react";
 import { loadFont } from "@/utils/loadFont";
 import { simpleFetcher } from "@/utils/fetcher";
 

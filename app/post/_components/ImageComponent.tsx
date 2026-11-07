@@ -1,8 +1,6 @@
-import Image from "next/image";
 import { ImageData } from "../_classes/ImageData";
 import { ComponentParams } from "../_interfaces/componentParams";
 import Component from "./Component";
-import { ComponentVariants } from "../_types/ComponentVariants";
 import { SetEditingComponent } from "../_types/SetEditingComponent";
 
 interface Params extends ComponentParams<ImageData> {
