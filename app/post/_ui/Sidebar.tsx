@@ -30,8 +30,12 @@ export default function Sidebar({
   function addImage(
     event: ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ): void {
-    if (event.target.files !== null && event.target.files.item(0) !== null) {
-      addComponent(new ImageData(event.target.files.item(0)));
+    let files = event.target.files;
+    if (files !== null) {
+      let image = files.item(0);
+      if (image !== null) {
+        addComponent(new ImageData(image));
+      }
     }
   }
 
