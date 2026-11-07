@@ -1,284 +1,284 @@
-Need to install the following packages:
-supabase@2.122.0
-Ok to proceed? (y) 
 export type Json =
   | string
   | number
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
-  }
+    PostgrestVersion: "13.0.4";
+  };
   public: {
     Tables: {
       Component: {
         Row: {
-          height: number | null
-          id: number
-          post: number | null
-          width: number | null
-          x: number | null
-          y: number | null
-          z: number | null
-        }
+          height: number | null;
+          id: number;
+          post: number | null;
+          width: number | null;
+          x: number | null;
+          y: number | null;
+          z: number | null;
+        };
         Insert: {
-          height?: number | null
-          id?: number
-          post?: number | null
-          width?: number | null
-          x?: number | null
-          y?: number | null
-          z?: number | null
-        }
+          height?: number | null;
+          id?: number;
+          post?: number | null;
+          width?: number | null;
+          x?: number | null;
+          y?: number | null;
+          z?: number | null;
+        };
         Update: {
-          height?: number | null
-          id?: number
-          post?: number | null
-          width?: number | null
-          x?: number | null
-          y?: number | null
-          z?: number | null
-        }
+          height?: number | null;
+          id?: number;
+          post?: number | null;
+          width?: number | null;
+          x?: number | null;
+          y?: number | null;
+          z?: number | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "Component_post_fkey1"
-            columns: ["post"]
-            isOneToOne: false
-            referencedRelation: "Post"
-            referencedColumns: ["id"]
+            foreignKeyName: "Component_post_fkey1";
+            columns: ["post"];
+            isOneToOne: false;
+            referencedRelation: "Post";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       ImageComponent: {
         Row: {
-          component: number
-          id: number
-          image: string
-        }
+          component: number;
+          id: number;
+          image: string;
+        };
         Insert: {
-          component: number
-          id?: number
-          image: string
-        }
+          component: number;
+          id?: number;
+          image: string;
+        };
         Update: {
-          component?: number
-          id?: number
-          image?: string
-        }
+          component?: number;
+          id?: number;
+          image?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "ImageComponent_component_fkey"
-            columns: ["component"]
-            isOneToOne: false
-            referencedRelation: "Component"
-            referencedColumns: ["id"]
+            foreignKeyName: "ImageComponent_component_fkey";
+            columns: ["component"];
+            isOneToOne: false;
+            referencedRelation: "Component";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "ImageComponent_image_fkey"
-            columns: ["image"]
-            isOneToOne: false
-            referencedRelation: "objects"
-            referencedColumns: ["id"]
+            foreignKeyName: "ImageComponent_image_fkey";
+            columns: ["image"];
+            isOneToOne: false;
+            referencedRelation: "objects";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       Like: {
         Row: {
-          post_id: number
-          user_id: string
-        }
+          post_id: number;
+          user_id: string;
+        };
         Insert: {
-          post_id: number
-          user_id: string
-        }
+          post_id: number;
+          user_id: string;
+        };
         Update: {
-          post_id?: number
-          user_id?: string
-        }
+          post_id?: number;
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "Like_post_id_fkey"
-            columns: ["post_id"]
-            isOneToOne: false
-            referencedRelation: "Post"
-            referencedColumns: ["id"]
+            foreignKeyName: "Like_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "Post";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       Post: {
         Row: {
-          created_at: string
-          id: number
-          user: string | null
-        }
+          created_at: string;
+          id: number;
+          user: string | null;
+        };
         Insert: {
-          created_at?: string
-          id?: number
-          user?: string | null
-        }
+          created_at?: string;
+          id?: number;
+          user?: string | null;
+        };
         Update: {
-          created_at?: string
-          id?: number
-          user?: string | null
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          id?: number;
+          user?: string | null;
+        };
+        Relationships: [];
+      };
       ShapeComponent: {
         Row: {
-          color: string | null
-          component: number | null
-          id: number
-          type: string | null
-        }
+          color: string | null;
+          component: number | null;
+          id: number;
+          type: string | null;
+        };
         Insert: {
-          color?: string | null
-          component?: number | null
-          id?: number
-          type?: string | null
-        }
+          color?: string | null;
+          component?: number | null;
+          id?: number;
+          type?: string | null;
+        };
         Update: {
-          color?: string | null
-          component?: number | null
-          id?: number
-          type?: string | null
-        }
+          color?: string | null;
+          component?: number | null;
+          id?: number;
+          type?: string | null;
+        };
         Relationships: [
           {
-            foreignKeyName: "ShapeComponent_component_fkey"
-            columns: ["component"]
-            isOneToOne: false
-            referencedRelation: "Component"
-            referencedColumns: ["id"]
+            foreignKeyName: "ShapeComponent_component_fkey";
+            columns: ["component"];
+            isOneToOne: false;
+            referencedRelation: "Component";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       TextComponent: {
         Row: {
-          component: number
-          font: string
-          id: number
-          size: number
-          value: string
-        }
+          component: number;
+          font: string;
+          id: number;
+          size: number;
+          value: string;
+        };
         Insert: {
-          component: number
-          font: string
-          id?: number
-          size: number
-          value: string
-        }
+          component: number;
+          font: string;
+          id?: number;
+          size: number;
+          value: string;
+        };
         Update: {
-          component?: number
-          font?: string
-          id?: number
-          size?: number
-          value?: string
-        }
+          component?: number;
+          font?: string;
+          id?: number;
+          size?: number;
+          value?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "TextComponent_component_fkey"
-            columns: ["component"]
-            isOneToOne: false
-            referencedRelation: "Component"
-            referencedColumns: ["id"]
+            foreignKeyName: "TextComponent_component_fkey";
+            columns: ["component"];
+            isOneToOne: false;
+            referencedRelation: "Component";
+            referencedColumns: ["id"];
           },
-        ]
-      }
-    }
+        ];
+      };
+    };
     Views: {
       objects: {
         Row: {
-          archived_at: string | null
-          bucket_id: string | null
-          created_at: string | null
-          id: string | null
-          is_delete_marker: boolean | null
-          is_versioned: boolean | null
-          last_accessed_at: string | null
-          metadata: Json | null
-          name: string | null
-          owner: string | null
-          owner_id: string | null
-          path_tokens: string[] | null
-          updated_at: string | null
-          user_metadata: Json | null
-          version: string | null
-        }
+          archived_at: string | null;
+          bucket_id: string | null;
+          created_at: string | null;
+          id: string | null;
+          is_delete_marker: boolean | null;
+          is_versioned: boolean | null;
+          last_accessed_at: string | null;
+          metadata: Json | null;
+          name: string | null;
+          owner: string | null;
+          owner_id: string | null;
+          path_tokens: string[] | null;
+          updated_at: string | null;
+          user_metadata: Json | null;
+          version: string | null;
+        };
         Insert: {
-          archived_at?: string | null
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string | null
-          is_delete_marker?: boolean | null
-          is_versioned?: boolean | null
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          owner_id?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          user_metadata?: Json | null
-          version?: string | null
-        }
+          archived_at?: string | null;
+          bucket_id?: string | null;
+          created_at?: string | null;
+          id?: string | null;
+          is_delete_marker?: boolean | null;
+          is_versioned?: boolean | null;
+          last_accessed_at?: string | null;
+          metadata?: Json | null;
+          name?: string | null;
+          owner?: string | null;
+          owner_id?: string | null;
+          path_tokens?: string[] | null;
+          updated_at?: string | null;
+          user_metadata?: Json | null;
+          version?: string | null;
+        };
         Update: {
-          archived_at?: string | null
-          bucket_id?: string | null
-          created_at?: string | null
-          id?: string | null
-          is_delete_marker?: boolean | null
-          is_versioned?: boolean | null
-          last_accessed_at?: string | null
-          metadata?: Json | null
-          name?: string | null
-          owner?: string | null
-          owner_id?: string | null
-          path_tokens?: string[] | null
-          updated_at?: string | null
-          user_metadata?: Json | null
-          version?: string | null
-        }
-        Relationships: []
-      }
-    }
+          archived_at?: string | null;
+          bucket_id?: string | null;
+          created_at?: string | null;
+          id?: string | null;
+          is_delete_marker?: boolean | null;
+          is_versioned?: boolean | null;
+          last_accessed_at?: string | null;
+          metadata?: Json | null;
+          name?: string | null;
+          owner?: string | null;
+          owner_id?: string | null;
+          path_tokens?: string[] | null;
+          updated_at?: string | null;
+          user_metadata?: Json | null;
+          version?: string | null;
+        };
+        Relationships: [];
+      };
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  "public"
+>];
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends (DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
       DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -286,98 +286,95 @@ export type Tables<
         DefaultSchema["Views"])
     ? (DefaultSchema["Tables"] &
         DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
   TableName extends (DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
   TableName extends (DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
-    | { schema: keyof DatabaseWithoutInternals },
+    keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
   EnumName extends (DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
+    : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+    : never;
 
 export const Constants = {
   public: {
     Enums: {},
   },
-} as const
+} as const;
