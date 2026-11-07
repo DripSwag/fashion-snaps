@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Geist, Geist_Mono, Bodoni_Moda } from "next/font/google";
+import { Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import { createClient } from "@/utils/supabase/server";
 
@@ -29,17 +29,26 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${bodoniModa.className} antialiased`}>
-        <nav className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-8 py-4 bg-white/70 backdrop-blur-md border-b border-black/10">
-          <Link href="/">Home</Link>
-          {error === null ? (
-            <Link href="/post">Post</Link>
-          ) : (
-            <Link href="/login">Login</Link>
-          )}
+        <nav className="fixed top-0 inset-x-0 z-50 flex items-center px-8 py-4 justify-between bg-white/70 backdrop-blur-md border-b border-black/10">
+          <span className="flex gap-2">
+            <Link href="/">Home</Link>
+            {error === null && <Link href={"/post"}>Post</Link>}
+          </span>
+          {error === null ? <LogoutBTN /> : <Link href="/login">Login</Link>}
         </nav>
 
         {children}
       </body>
     </html>
+  );
+}
+
+function LogoutBTN() {
+  return (
+    <form action="/auth/signOut" method="post">
+      <button type="submit" className="hover:cursor-pointer">
+        Logout
+      </button>
+    </form>
   );
 }
